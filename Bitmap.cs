@@ -88,7 +88,6 @@ namespace losertron4000
                         //img.span
                         //int index = y * img.Width + x;
 
-                        // Access the pixel using the index
                         Debug.WriteLine("Falling back onto slow");
 
                         Rgba32 pixel = img[x, y];
@@ -101,6 +100,10 @@ namespace losertron4000
                             if (maxH < y) maxH = y;
                         }
 
+<<<<<<< Updated upstream
+=======
+                        //Debug.WriteLine($"Pixel at ({x}, {y}): R={pixel.R}, G={pixel.G}, B={pixel.B}, A={pixel.A}");
+>>>>>>> Stashed changes
                     }
                 }
             }

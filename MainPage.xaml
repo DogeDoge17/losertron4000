@@ -4,32 +4,32 @@
              x:Class="losertron4000.MainPage">
 
     <Grid RowSpacing="0" ColumnSpacing="0">
-        <!-- We define two rows of equal height using '*' for each row -->
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <!-- Top half: Image -->
         <Image x:Name="dokiPreview" Grid.Row="0"
                Source="sample.png"
                Aspect="AspectFit"
                HorizontalOptions="FillAndExpand"
                VerticalOptions="FillAndExpand" />
 
-        <!-- Bottom half: ScrollView containing a 3xY Grid -->
         <ScrollView Grid.Row="1"
                     HorizontalOptions="FillAndExpand"
                     VerticalOptions="FillAndExpand">
             <Grid>
-                <!-- Define three columns -->
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
+<<<<<<< Updated upstream
                 
+=======
+           
+>>>>>>> Stashed changes
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />

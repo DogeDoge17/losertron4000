@@ -15,4 +15,8 @@ for root, dirs, files in os.walk(resPath):
 with open(resPath + '\\map.txt', 'w') as f:
 	f.write(outp)
 
+<<<<<<< Updated upstream
 print("success")
+=======
+print("finished mapping")
+>>>>>>> Stashed changes

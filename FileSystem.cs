@@ -29,6 +29,10 @@ namespace losertron4000
         public static Path[] GetDirectories(string path = "", string searchPattern = "*", bool recursive = false)
         {
             path = path.Replace('\\', '/');
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
             string normalizedPath = string.IsNullOrEmpty(path) ? string.Empty : path.TrimEnd('/') + "/";
 
             Regex patternRegex = new Regex("^" + Regex.Escape(searchPattern).Replace("\\*", ".*") + "$", RegexOptions.IgnoreCase);
@@ -46,6 +50,10 @@ namespace losertron4000
         public static Path[] GetFiles(string path = "", string searchPattern = "*", bool recursive = false)
         {
             path = path.Replace('\\', '/');
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
             string normalizedPath = string.IsNullOrEmpty(path) ? string.Empty : path.TrimEnd('/');
 
             Regex patternRegex = new Regex("^" + Regex.Escape(searchPattern).Replace("\\*", ".*") + "$", RegexOptions.IgnoreCase);
@@ -84,7 +92,6 @@ namespace losertron4000
             return reader.ReadBytes((int)stream.Length);
 
         }
-
         public static bool FileExists(Path path)
         {
             return allDirs.Contains(path) || allDirs.Any(entry => entry.StartsWith(path));
@@ -103,9 +110,15 @@ namespace losertron4000
 
         public static implicit operator string(Path p) => p._path;
 
+<<<<<<< Updated upstream
 
         public static implicit operator Path(string s) => new Path(s);
 
+=======
+        public static implicit operator Path(string s) => new Path(s);
+
+        
+>>>>>>> Stashed changes
         public static Path operator /(Path left, Path right)
         {
             return new Path(System.IO.Path.Combine(left._path, right._path));
