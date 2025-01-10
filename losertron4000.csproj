@@ -19,8 +19,9 @@
 		<SingleProject>true</SingleProject>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
+    <EmbedAssembliesIntoApk>false</EmbedAssembliesIntoApk>
 
-		<!-- Display name -->
+  <!-- Display name -->
 		<ApplicationTitle>losertron4000</ApplicationTitle>
 
 		<!-- App Identifier -->
@@ -102,10 +103,11 @@
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="9.0.22" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.0" />
 		<PackageReference Include="SixLabors.ImageSharp" Version="3.1.6" />
+		<PackageReference Include="System.Text.Json" Version="9.0.0" />
 	</ItemGroup>
 
 	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-	  <Exec Command="py mapraw.py" />
+	  <Exec Command="py automap.py" />
 	</Target>
 
 </Project>

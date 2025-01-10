@@ -20,7 +20,10 @@ namespace losertron4000
 
         public Bitmap(Path path)
         {
-            stream = FileSystem.OpenFile(path);
+            if (FileSystem.FileExists(path))
+                stream = FileSystem.OpenFile(path);
+            else
+                throw new FileNotFoundException();
         }
 
         public Bitmap(Stream stream)
@@ -50,7 +53,7 @@ namespace losertron4000
             //return ImageSource.FromStream(() => bmp.stream);
         }
 
-        public Bitmap CropImage()
+        public Bitmap CropImage(bool shrink = true)
         {
             using Image<Rgba32> img = this;
 
@@ -100,10 +103,6 @@ namespace losertron4000
                             if (maxH < y) maxH = y;
                         }
 
-<<<<<<< Updated upstream
-=======
-                        //Debug.WriteLine($"Pixel at ({x}, {y}): R={pixel.R}, G={pixel.G}, B={pixel.B}, A={pixel.A}");
->>>>>>> Stashed changes
                     }
                 }
             }
@@ -111,13 +110,15 @@ namespace losertron4000
             Rectangle sourceRect = new Rectangle(minW, minH, maxW - minW, maxH - minH);
 
             img.Mutate(ctx => ctx.Crop(sourceRect));
+            if(shrink)
+                img.Mutate(ctx => ctx.Resize(75,0));
 
             return img;
         }
 
         ~Bitmap()
         {
-            stream.Dispose();
+            //stream.Dispose();
         }
 
         

@@ -1,71 +1,54 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Linq;
-using System.Text.RegularExpressions;
+﻿using System.Text.Json.Serialization;
+using System.Text.Json;
 
 namespace losertron4000
 {
     static class FileSystem
     {
-        static HashSet<string> allDirs = new();
+        private static Directory _dirs;
 
-        public static async void Init()
+        public static void Init()
         {
-            using var stream = await Microsoft.Maui.Storage.FileSystem.OpenAppPackageFileAsync("map.txt");
+            using var stream = Microsoft.Maui.Storage.FileSystem.OpenAppPackageFileAsync("map.json").Result;
             using var reader = new StreamReader(stream);
-            var contents = reader.ReadToEnd().Replace("\\", "/").Replace("\r", "").Trim().Split("\n");
+            var rawJson = reader.ReadToEnd();
 
-            allDirs = new(contents.Length, StringComparer.Ordinal);
 
-            for (int i = 0; i < contents.Length; i++)
+            _dirs = JsonSerializer.Deserialize<Directory>(rawJson);
+        }
+
+
+
+        public static Path[] GetDirectories() => GetDirectories(new());
+        public static Path[] GetDirectories(Path path)
+        {
+
+            Directory targ = SeekToDir(path.DirectoryPath);
+
+            Path[] paths = new Path[targ.Directories.Count];
+
+            for (int i = 0; i < targ.Directories.Count; i++)
             {
-                allDirs.Add(new Path(contents[i]));
-            }            
+                paths[i] = targ.Directories[i].FullPath;
+            }
+
+            return paths;
         }
 
-        public static Path[] GetDirectories(string path = "", string searchPattern = "*", bool recursive = false)
+        public static Path[] GetFiles(Path path)
         {
-            path = path.Replace('\\', '/');
-<<<<<<< Updated upstream
-=======
+            var dir = SeekToDir(path.DirectoryPath);
+            var files = new Path[dir.Files.Count];
 
->>>>>>> Stashed changes
-            string normalizedPath = string.IsNullOrEmpty(path) ? string.Empty : path.TrimEnd('/') + "/";
+            int i = 0;
+            foreach (Path file in dir.Files)
+            {
+                files[i] = path.DirectoryPath / file;
+                i++;
+            }
 
-            Regex patternRegex = new Regex("^" + Regex.Escape(searchPattern).Replace("\\*", ".*") + "$", RegexOptions.IgnoreCase);
 
-            return allDirs
-            .Where(entry => string.IsNullOrEmpty(normalizedPath) || entry.StartsWith(normalizedPath))
-            .Select(entry => string.IsNullOrEmpty(normalizedPath) ? entry.Split('/')[0] : entry.Substring(normalizedPath.Length).Split('/')[0])
-            .Where(subEntry => !string.IsNullOrEmpty(subEntry) && patternRegex.IsMatch(subEntry))
-            .Distinct()
-            .Select(subEntry => string.IsNullOrEmpty(normalizedPath) ? subEntry : normalizedPath + subEntry)
-            .Where(entry => allDirs.Any(e => e.StartsWith(entry + "/")))
-            .Select(p => new Path(p)).ToArray();           
-        }
-
-        public static Path[] GetFiles(string path = "", string searchPattern = "*", bool recursive = false)
-        {
-            path = path.Replace('\\', '/');
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
-            string normalizedPath = string.IsNullOrEmpty(path) ? string.Empty : path.TrimEnd('/');
-
-            Regex patternRegex = new Regex("^" + Regex.Escape(searchPattern).Replace("\\*", ".*") + "$", RegexOptions.IgnoreCase);
-
-            return allDirs
-                .Where(entry => string.IsNullOrEmpty(normalizedPath) || entry.ToString().StartsWith(normalizedPath))
-                .Where(entry => !entry.ToString().EndsWith("/")) // Files do not end with '/'
-                .Select(entry => string.IsNullOrEmpty(normalizedPath) ? entry : entry.ToString().Substring(normalizedPath.Length))
-                .Where(subEntry => patternRegex.IsMatch(subEntry.Split('/')[0]))
-                .Where(subEntry => !recursive && !subEntry.Contains('/') || recursive) // Check recursion depth
-                .Select(subEntry => normalizedPath + subEntry)
-                .Select(p => new Path(p)).ToArray();
+            return files;
         }
 
         public static Stream OpenFile(Path path)
@@ -94,10 +77,75 @@ namespace losertron4000
         }
         public static bool FileExists(Path path)
         {
-            return allDirs.Contains(path) || allDirs.Any(entry => entry.StartsWith(path));
+            var dir = SeekToDir(path.DirectoryPath);
+
+            return dir.Files.Contains(path.FileName);
+        }
+
+        private static int FindDirectory(Directory dir, Path name)
+        {
+            for (int i = 0; i < dir.Directories.Count; i++)
+            {
+                if (dir.Directories[i].Name == name)
+                    return i;
+            }
+
+            return -1;
+        }
+
+        private static Directory SeekToDir(Path path)
+        {
+            string[] folders = path.ToString().TrimStart('\\', '/').TrimEnd('\\', '/').Split(new char[] { '\\', '/' });
+
+            Directory targ = _dirs;
+
+            for (int i = 0; i < folders.Length; i++)
+            {
+                int maybe = FindDirectory(targ, folders[i]);
+
+                if (maybe == -1)
+                    throw new FileNotFoundException("Failed to seek to " + path);
+
+                targ = targ.Directories[maybe];
+            }
+
+            return targ;
         }
     }
 
+
+    public class Directory
+    {
+        [JsonPropertyName("name")]
+        public string Name { get; set; }
+
+        [JsonPropertyName("fullPath")]
+        public string FullPath { get; set; }
+
+        [JsonPropertyName("dirs")]
+        public List<Directory> Directories { get; set; }
+
+        [JsonPropertyName("files")]
+        public HashSet<string> Files { get; set; }
+    }
+    //public class Directory
+    //{
+    //    [JsonPropertyName("name")]
+    //    public string name { get; set; }
+
+    //    [JsonPropertyName("dirs")]
+    //    public Directory[] directories { get; set; }
+
+    //    [JsonPropertyName("files")]
+    //    public string[] files { get; set; }
+
+    //    public Directory(string name, Directory[] dirs, string[] files)
+    //    {
+    //        this.name = name;
+    //        this.files = files;
+    //        this.directories = dirs;
+    //    }
+    //}
 
     public class Path
     {
@@ -105,20 +153,20 @@ namespace losertron4000
 
         public Path(string path)
         {
-            _path = path.EndsWith("\\") || path.EndsWith("/") ? path.Replace("\\", "/") : path.Replace("\\", "/");
+            _path = path.Replace("/", "\\").TrimStart('\\', '/').TrimEnd('\\', '/');
+        }
+        public Path()
+        {
+            _path = string.Empty;
+            //_path = path.EndsWith("\\") || path.EndsWith("/") ? path.Replace("\\", "/") : path.Replace("\\", "/");
         }
 
         public static implicit operator string(Path p) => p._path;
 
-<<<<<<< Updated upstream
 
         public static implicit operator Path(string s) => new Path(s);
 
-=======
-        public static implicit operator Path(string s) => new Path(s);
 
-        
->>>>>>> Stashed changes
         public static Path operator /(Path left, Path right)
         {
             return new Path(System.IO.Path.Combine(left._path, right._path));
@@ -132,8 +180,28 @@ namespace losertron4000
         {
             get
             {
-                string parent = System.IO.Path.GetDirectoryName(_path);
+                string parent = GetDirectoryName(_path);
                 return parent != null ? new Path(parent) : null;
+            }
+        }
+
+        public Path DirectoryPath
+        {
+            get
+            {
+                if (Extension == string.Empty)
+                    return new(_path);
+
+                string parent = GetDirectoryName(_path);
+                return parent != null ? new Path(parent) : null;
+            }
+        }
+
+        public string Extension
+        {
+            get
+            {
+                return System.IO.Path.GetExtension(_path);
             }
         }
 
@@ -145,9 +213,74 @@ namespace losertron4000
             Uri targetUri = new Uri(_path);
             Uri relativeUri = baseUri.MakeRelativeUri(targetUri);
             string relativePath = Uri.UnescapeDataString(relativeUri.ToString());
-            return new Path(relativePath.Replace("/", "\\\\"));
+            return new Path(relativePath.Replace("/", "\\"));
         }
 
-        public string FileName => System.IO.Path.GetFileName(_path);
+        public string FileName => GetFileName(_path);
+
+        public static string GetDirectoryName(string path)
+        {
+            if (string.IsNullOrEmpty(path))
+            {
+                throw new ArgumentException("Path cannot be null or empty.", nameof(path));
+            }
+
+            path = path.Trim();
+
+            // Handle special cases for root or single-character paths.
+            if (path.Length == 1 && (path == "\\" || path == "/"))
+            {
+                return null;
+            }
+
+            // Normalize slashes for consistency.
+            path = path.Replace('/', '\\');
+
+
+
+            int lastSlashIndex = path.LastIndexOf('\\');
+
+            // If there are no slashes, the path has no directory component.
+            if (lastSlashIndex == -1)
+            {
+                return null;
+            }
+
+            // If the last slash is at the beginning (e.g., "C:\"), handle it specially.
+            if (lastSlashIndex == 0 || (lastSlashIndex == 2 && path[1] == ':'))
+            {
+                return path.Substring(0, lastSlashIndex + 1);
+            }
+
+            // Return the substring up to (but not including) the last slash.
+            return path.Substring(0, lastSlashIndex);
+        }
+
+        public static string GetFileName(string path)
+        {
+            if (string.IsNullOrEmpty(path))
+            {
+                throw new ArgumentException("Path cannot be null or empty.", nameof(path));
+            }
+
+            path = path.Trim();
+
+            // Normalize slashes for consistency.
+            path = path.Replace('/', '\\');
+
+
+
+            int lastSlashIndex = path.LastIndexOf('\\');
+
+            // If there are no slashes, the entire path is the file name.
+            if (lastSlashIndex == -1)
+            {
+                return path;
+            }
+
+            // Return the substring after the last slash.
+            return path.Substring(lastSlashIndex + 1);
+        }
+
     }
 }

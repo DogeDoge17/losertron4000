@@ -1,0 +1,670 @@
+{
+    "name": "Raw",
+    "fullPath": "",
+    "dirs": [
+        {
+            "name": "monika",
+            "fullPath": "\\monika",
+            "dirs": [
+                {
+                    "name": "body",
+                    "fullPath": "\\monika\\body",
+                    "dirs": [],
+                    "files": [
+                        "monika_forward_casual_left_down.png",
+                        "monika_forward_casual_left_point.png",
+                        "monika_forward_casual_right_down.png",
+                        "monika_forward_casual_right_hip.png",
+                        "monika_forward_funeral_left_down.png",
+                        "monika_forward_funeral_left_point.png",
+                        "monika_forward_funeral_right_down.png",
+                        "monika_forward_funeral_right_hip.png",
+                        "monika_forward_uniform_left_down.png",
+                        "monika_forward_uniform_left_point.png",
+                        "monika_forward_uniform_right_down.png",
+                        "monika_forward_uniform_right_hip.png",
+                        "monika_lean_casual_bodybase.png",
+                        "monika_lean_uniform_bodybase.png"
+                    ]
+                },
+                {
+                    "name": "brows",
+                    "fullPath": "\\monika\\brows",
+                    "dirs": [],
+                    "files": [
+                        "monika_forward_eyebrows_b1a.png",
+                        "monika_forward_eyebrows_b1b.png",
+                        "monika_forward_eyebrows_b1c.png",
+                        "monika_forward_eyebrows_b1d.png",
+                        "monika_forward_eyebrows_b1e.png",
+                        "monika_forward_eyebrows_b1f.png",
+                        "monika_forward_eyebrows_b2a.png",
+                        "monika_forward_eyebrows_b2b.png",
+                        "monika_forward_eyebrows_b2c.png",
+                        "monika_forward_eyebrows_b3a.png",
+                        "monika_forward_eyebrows_b3b.png",
+                        "monika_forward_eyebrows_b3c.png",
+                        "monika_lean_eyebrows_b1.png",
+                        "monika_lean_eyebrows_b2.png",
+                        "monika_lean_eyebrows_b3.png"
+                    ]
+                },
+                {
+                    "name": "extra",
+                    "fullPath": "\\monika\\extra",
+                    "dirs": [],
+                    "files": [
+                        "monika_forward_special_scream.png",
+                        "monika_funeral_bow.png",
+                        "monika_stress.png"
+                    ]
+                },
+                {
+                    "name": "eyes",
+                    "fullPath": "\\monika\\eyes",
+                    "dirs": [],
+                    "files": [
+                        "monika_forward_eyes_e0a.png",
+                        "monika_forward_eyes_e0b.png",
+                        "monika_forward_eyes_e1a.png",
+                        "monika_forward_eyes_e1b.png",
+                        "monika_forward_eyes_e1c.png",
+                        "monika_forward_eyes_e1d.png",
+                        "monika_forward_eyes_e1e.png",
+                        "monika_forward_eyes_e1f.png",
+                        "monika_forward_eyes_e1g.png",
+                        "monika_forward_eyes_e1h.png",
+                        "monika_forward_eyes_e2a.png",
+                        "monika_forward_eyes_e2b.png",
+                        "monika_forward_eyes_e2c.png",
+                        "monika_forward_eyes_e2d.png",
+                        "monika_forward_eyes_e3a.png",
+                        "monika_forward_eyes_e3b.png",
+                        "monika_forward_eyes_e4a.png",
+                        "monika_forward_eyes_e4b.png",
+                        "monika_forward_eyes_e4c.png",
+                        "monika_forward_eyes_e4d.png",
+                        "monika_forward_eyes_e4e.png",
+                        "monika_lean_eyes_e1.png",
+                        "monika_lean_eyes_e2.png",
+                        "monika_lean_eyes_e3.png",
+                        "monika_lean_eyes_e4.png",
+                        "monika_lean_eyes_e5.png",
+                        "monika_lean_eyes_e6.png"
+                    ]
+                },
+                {
+                    "name": "head",
+                    "fullPath": "\\monika\\head",
+                    "dirs": [],
+                    "files": [
+                        "monika_forward_facebase.png",
+                        "monika_lean_casual_facebase.png",
+                        "monika_lean_uniform_facebase.png"
+                    ]
+                },
+                {
+                    "name": "mouth",
+                    "fullPath": "\\monika\\mouth",
+                    "dirs": [],
+                    "files": [
+                        "monika_forward_mouth_ma.png",
+                        "monika_forward_mouth_mb.png",
+                        "monika_forward_mouth_mc.png",
+                        "monika_forward_mouth_md.png",
+                        "monika_forward_mouth_me.png",
+                        "monika_forward_mouth_mf.png",
+                        "monika_forward_mouth_mg.png",
+                        "monika_forward_mouth_mh.png",
+                        "monika_forward_mouth_mi.png",
+                        "monika_forward_mouth_mj.png",
+                        "monika_forward_mouth_mk.png",
+                        "monika_forward_mouth_ml.png",
+                        "monika_forward_mouth_mm.png",
+                        "monika_forward_mouth_mn.png",
+                        "monika_forward_mouth_mo.png",
+                        "monika_forward_mouth_mp.png",
+                        "monika_forward_mouth_mq.png",
+                        "monika_forward_mouth_mr.png",
+                        "monika_lean_mouth_m1.png",
+                        "monika_lean_mouth_m2.png",
+                        "monika_lean_mouth_m3.png",
+                        "monika_lean_mouth_m4.png"
+                    ]
+                },
+                {
+                    "name": "nose",
+                    "fullPath": "\\monika\\nose",
+                    "dirs": [],
+                    "files": [
+                        "monika_forward_nose_n1.png",
+                        "monika_forward_nose_n2.png",
+                        "monika_forward_nose_n3.png",
+                        "monika_forward_nose_n4.png",
+                        "monika_lean_nose_n1.png",
+                        "monika_lean_nose_n2.png",
+                        "monika_lean_nose_n3.png",
+                        "monika_lean_nose_n4.png",
+                        "monika_lean_nose_n5.png"
+                    ]
+                }
+            ],
+            "files": []
+        },
+        {
+            "name": "natsuki",
+            "fullPath": "\\natsuki",
+            "dirs": [
+                {
+                    "name": "body",
+                    "fullPath": "\\natsuki\\body",
+                    "dirs": [],
+                    "files": [
+                        "natsuki_crossed(ff)_casual.png",
+                        "natsuki_crossed(ff)_casual2.png",
+                        "natsuki_crossed(ff)_casual3.png",
+                        "natsuki_crossed(ff)_coat.png",
+                        "natsuki_crossed(ff)_unicasual.png",
+                        "natsuki_crossed(ff)_uniform.png",
+                        "natsuki_crossed(ff)_uniform2.png",
+                        "natsuki_crossed(ff)_uniformb.png",
+                        "natsuki_crossed(fs)_casual.png",
+                        "natsuki_crossed(fs)_casual3.png",
+                        "natsuki_crossed(fs)_uniform.png",
+                        "natsuki_turned_casual2_left_down.png",
+                        "natsuki_turned_casual2_left_hip.png",
+                        "natsuki_turned_casual2_right_down.png",
+                        "natsuki_turned_casual2_right_hip.png",
+                        "natsuki_turned_casual3_left_down.png",
+                        "natsuki_turned_casual3_left_hip.png",
+                        "natsuki_turned_casual3_right_down.png",
+                        "natsuki_turned_casual3_right_hip.png",
+                        "natsuki_turned_casual_left_down.png",
+                        "natsuki_turned_casual_left_hip.png",
+                        "natsuki_turned_casual_right_down.png",
+                        "natsuki_turned_casual_right_hip.png",
+                        "natsuki_turned_coat_left_down.png",
+                        "natsuki_turned_coat_left_hip.png",
+                        "natsuki_turned_coat_right_down.png",
+                        "natsuki_turned_coat_right_hip.png",
+                        "natsuki_turned_uniform2_left_down.png",
+                        "natsuki_turned_uniform2_left_hip.png",
+                        "natsuki_turned_uniform2_right_down.png",
+                        "natsuki_turned_uniform2_right_hip.png",
+                        "natsuki_turned_uniformb_right_down.png",
+                        "natsuki_turned_uniformb_right_hip.png",
+                        "natsuki_turned_uniformcasual_left_down.png",
+                        "natsuki_turned_uniformcasual_left_hip.png",
+                        "natsuki_turned_uniformcasual_right_down.png",
+                        "natsuki_turned_uniformcasual_right_hip.png",
+                        "natsuki_turned_uniform_left_down.png",
+                        "natsuki_turned_uniform_left_hip.png",
+                        "natsuki_turned_uniform_right_down.png",
+                        "natsuki_turned_uniform_right_hip.png"
+                    ]
+                },
+                {
+                    "name": "brows",
+                    "fullPath": "\\natsuki\\brows",
+                    "dirs": [],
+                    "files": [
+                        "natsuki_ff_eyebrows_b1a.png",
+                        "natsuki_ff_eyebrows_b1b.png",
+                        "natsuki_ff_eyebrows_b1c.png",
+                        "natsuki_ff_eyebrows_b1d.png",
+                        "natsuki_ff_eyebrows_b1e.png",
+                        "natsuki_ff_eyebrows_b1f.png",
+                        "natsuki_ff_eyebrows_b2a.png",
+                        "natsuki_ff_eyebrows_b2b.png",
+                        "natsuki_ff_eyebrows_b2c.png",
+                        "natsuki_ff_eyebrows_b3a.png",
+                        "natsuki_ff_eyebrows_b3b.png",
+                        "natsuki_ff_eyebrows_b3c.png",
+                        "natsuki_fs_eyebrows_b1.png",
+                        "natsuki_fs_eyebrows_b2.png",
+                        "natsuki_fs_eyebrows_b3.png"
+                    ]
+                },
+                {
+                    "name": "extra",
+                    "fullPath": "\\natsuki\\extra",
+                    "dirs": [],
+                    "files": [
+                        "bruise_sat_happclosed.png",
+                        "bruise_sat_neutclosed.png",
+                        "bruise_sat_open.png",
+                        "bruise_sun_happclosed.png",
+                        "bruise_sun_neutclosed.png",
+                        "bruise_sun_open.png",
+                        "natsuki_apron.png",
+                        "natsuki_cross_scarf.png",
+                        "natsuki_crumbs.png",
+                        "natsuki_dry_tears.png",
+                        "natsuki_face_special_scream.png",
+                        "natsuki_ff_bruise_happclosed.png",
+                        "natsuki_ff_bruise_neutclosed.png",
+                        "natsuki_ff_bruise_open.png",
+                        "natsuki_ff_nosebleed.png",
+                        "natsuki_ff_terminator_shades.png",
+                        "natsuki_fs_bruise_closed.png",
+                        "natsuki_fs_bruise_open.png",
+                        "natsuki_fs_nosebleed.png",
+                        "natsuki_lg1.png",
+                        "natsuki_lg2.png",
+                        "natsuki_ptsd.png",
+                        "natsuki_rg1.png",
+                        "natsuki_rg2.png",
+                        "natsuki_scarf.png"
+                    ]
+                },
+                {
+                    "name": "eyes",
+                    "fullPath": "\\natsuki\\eyes",
+                    "dirs": [],
+                    "files": [
+                        "natsuki_ff_eyes_e0a.png",
+                        "natsuki_ff_eyes_e0b.png",
+                        "natsuki_ff_eyes_e1a.png",
+                        "natsuki_ff_eyes_e1b.png",
+                        "natsuki_ff_eyes_e1c.png",
+                        "natsuki_ff_eyes_e1d.png",
+                        "natsuki_ff_eyes_e1e.png",
+                        "natsuki_ff_eyes_e1f.png",
+                        "natsuki_ff_eyes_e1g.png",
+                        "natsuki_ff_eyes_e1h.png",
+                        "natsuki_ff_eyes_e2a.png",
+                        "natsuki_ff_eyes_e2b.png",
+                        "natsuki_ff_eyes_e2c.png",
+                        "natsuki_ff_eyes_e2d.png",
+                        "natsuki_ff_eyes_e3a.png",
+                        "natsuki_ff_eyes_e3b.png",
+                        "natsuki_ff_eyes_e4a.png",
+                        "natsuki_ff_eyes_e4b.png",
+                        "natsuki_ff_eyes_e4c.png",
+                        "natsuki_ff_eyes_e4d.png",
+                        "natsuki_ff_eyes_e4e.png",
+                        "natsuki_fs_eyes_e1.png",
+                        "natsuki_fs_eyes_e2.png",
+                        "natsuki_fs_eyes_e3.png",
+                        "natsuki_fs_eyes_e4.png",
+                        "natsuki_fs_eyes_e5.png",
+                        "natsuki_fs_eyes_e6.png"
+                    ]
+                },
+                {
+                    "name": "head",
+                    "fullPath": "\\natsuki\\head",
+                    "dirs": [],
+                    "files": [
+                        "natsuki_face_forward.png",
+                        "natsuki_face_sad.png",
+                        "natsuki_face_turnedaway.png"
+                    ]
+                },
+                {
+                    "name": "mouth",
+                    "fullPath": "\\natsuki\\mouth",
+                    "dirs": [],
+                    "files": [
+                        "natsuki_ff_mouth_ma.png",
+                        "natsuki_ff_mouth_mb.png",
+                        "natsuki_ff_mouth_mc.png",
+                        "natsuki_ff_mouth_md.png",
+                        "natsuki_ff_mouth_me.png",
+                        "natsuki_ff_mouth_mf.png",
+                        "natsuki_ff_mouth_mg.png",
+                        "natsuki_ff_mouth_mh.png",
+                        "natsuki_ff_mouth_mi.png",
+                        "natsuki_ff_mouth_mj.png",
+                        "natsuki_ff_mouth_mk.png",
+                        "natsuki_ff_mouth_ml.png",
+                        "natsuki_ff_mouth_mm.png",
+                        "natsuki_ff_mouth_mn.png",
+                        "natsuki_ff_mouth_mo.png",
+                        "natsuki_ff_mouth_mp.png",
+                        "natsuki_ff_mouth_mq.png",
+                        "natsuki_ff_mouth_mr.png",
+                        "natsuki_fs_mouth_m1.png",
+                        "natsuki_fs_mouth_m2.png",
+                        "natsuki_fs_mouth_m3.png",
+                        "natsuki_fs_mouth_m4.png"
+                    ]
+                },
+                {
+                    "name": "nose",
+                    "fullPath": "\\natsuki\\nose",
+                    "dirs": [],
+                    "files": [
+                        "natsuki_ff_nose_n1.png",
+                        "natsuki_ff_nose_n2.png",
+                        "natsuki_ff_nose_n3.png",
+                        "natsuki_ff_nose_n4.png",
+                        "natsuki_fs_nose_n1.png",
+                        "natsuki_fs_nose_n2.png",
+                        "natsuki_fs_nose_n3.png",
+                        "natsuki_fs_nose_n4.png",
+                        "natsuki_fs_nose_n5.png"
+                    ]
+                }
+            ],
+            "files": []
+        },
+        {
+            "name": "sayori",
+            "fullPath": "\\sayori",
+            "dirs": [
+                {
+                    "name": "body",
+                    "fullPath": "\\sayori\\body",
+                    "dirs": [],
+                    "files": [
+                        "sayori_tapping_casual_bodybase.png",
+                        "sayori_tapping_uniform_bodybase.png",
+                        "sayori_turned_casual_left_down.png",
+                        "sayori_turned_casual_left_up.png",
+                        "sayori_turned_casual_right_down.png",
+                        "sayori_turned_casual_right_up.png",
+                        "sayori_turned_hoodie_left_down.png",
+                        "sayori_turned_hoodie_left_up.png",
+                        "sayori_turned_hoodie_right_down.png",
+                        "sayori_turned_hoodie_right_up.png",
+                        "sayori_turned_jacket_left_down.png",
+                        "sayori_turned_jacket_left_up.png",
+                        "sayori_turned_jacket_right_down.png",
+                        "sayori_turned_jacket_right_up.png",
+                        "sayori_turned_pyjama_left_down.png",
+                        "sayori_turned_pyjama_left_up.png",
+                        "sayori_turned_pyjama_right_down.png",
+                        "sayori_turned_pyjama_right_up.png",
+                        "sayori_turned_uniform_left_down.png",
+                        "sayori_turned_uniform_left_up.png",
+                        "sayori_turned_uniform_right_down.png",
+                        "sayori_turned_uniform_right_up.png"
+                    ]
+                },
+                {
+                    "name": "brows",
+                    "fullPath": "\\sayori\\brows",
+                    "dirs": [],
+                    "files": [
+                        "sayori_tapping_eyebrows_b1.png",
+                        "sayori_tapping_eyebrows_b2.png",
+                        "sayori_tapping_eyebrows_b3.png",
+                        "sayori_turned_eyebrows_b1a.png",
+                        "sayori_turned_eyebrows_b1b.png",
+                        "sayori_turned_eyebrows_b1c.png",
+                        "sayori_turned_eyebrows_b1d.png",
+                        "sayori_turned_eyebrows_b1e.png",
+                        "sayori_turned_eyebrows_b1f.png",
+                        "sayori_turned_eyebrows_b2a.png",
+                        "sayori_turned_eyebrows_b2b.png",
+                        "sayori_turned_eyebrows_b2c.png",
+                        "sayori_turned_eyebrows_b3a.png",
+                        "sayori_turned_eyebrows_b3b.png",
+                        "sayori_turned_eyebrows_b3c.png"
+                    ]
+                },
+                {
+                    "name": "extra",
+                    "fullPath": "\\sayori\\extra",
+                    "dirs": [],
+                    "files": [
+                        "sayori_hair_epilogue.png",
+                        "sayori_ptsd.png",
+                        "sayori_turned_special_scream.png"
+                    ]
+                },
+                {
+                    "name": "eyes",
+                    "fullPath": "\\sayori\\eyes",
+                    "dirs": [],
+                    "files": [
+                        "sayori_tapping_eyes_e1.png",
+                        "sayori_tapping_eyes_e2.png",
+                        "sayori_tapping_eyes_e3.png",
+                        "sayori_tapping_eyes_e4.png",
+                        "sayori_tapping_eyes_e5.png",
+                        "sayori_tapping_eyes_e6.png",
+                        "sayori_turned_eyes_e0a.png",
+                        "sayori_turned_eyes_e0b.png",
+                        "sayori_turned_eyes_e1a.png",
+                        "sayori_turned_eyes_e1b.png",
+                        "sayori_turned_eyes_e1c.png",
+                        "sayori_turned_eyes_e1d.png",
+                        "sayori_turned_eyes_e1e.png",
+                        "sayori_turned_eyes_e1f.png",
+                        "sayori_turned_eyes_e1g.png",
+                        "sayori_turned_eyes_e1h.png",
+                        "sayori_turned_eyes_e2a.png",
+                        "sayori_turned_eyes_e2b.png",
+                        "sayori_turned_eyes_e2c.png",
+                        "sayori_turned_eyes_e2d.png",
+                        "sayori_turned_eyes_e3a.png",
+                        "sayori_turned_eyes_e3b.png",
+                        "sayori_turned_eyes_e4a.png",
+                        "sayori_turned_eyes_e4b.png",
+                        "sayori_turned_eyes_e4c.png",
+                        "sayori_turned_eyes_e4d.png",
+                        "sayori_turned_eyes_e4e.png"
+                    ]
+                },
+                {
+                    "name": "head",
+                    "fullPath": "\\sayori\\head",
+                    "dirs": [],
+                    "files": [
+                        "sayori_tapping_facebase.png",
+                        "sayori_turned_facebase.png"
+                    ]
+                },
+                {
+                    "name": "mouth",
+                    "fullPath": "\\sayori\\mouth",
+                    "dirs": [],
+                    "files": [
+                        "sayori_tapping_mouth_m1.png",
+                        "sayori_tapping_mouth_m2.png",
+                        "sayori_tapping_mouth_m3.png",
+                        "sayori_tapping_mouth_m4.png",
+                        "sayori_turned_mouth_ma.png",
+                        "sayori_turned_mouth_mb.png",
+                        "sayori_turned_mouth_mc.png",
+                        "sayori_turned_mouth_md.png",
+                        "sayori_turned_mouth_me.png",
+                        "sayori_turned_mouth_mf.png",
+                        "sayori_turned_mouth_mg.png",
+                        "sayori_turned_mouth_mh.png",
+                        "sayori_turned_mouth_mi.png",
+                        "sayori_turned_mouth_mj.png",
+                        "sayori_turned_mouth_mk.png",
+                        "sayori_turned_mouth_ml.png",
+                        "sayori_turned_mouth_mm.png",
+                        "sayori_turned_mouth_mn.png",
+                        "sayori_turned_mouth_mo.png",
+                        "sayori_turned_mouth_mp.png",
+                        "sayori_turned_mouth_mq.png",
+                        "sayori_turned_mouth_mr.png",
+                        "sayori_turned_mouth_ms.png"
+                    ]
+                },
+                {
+                    "name": "nose",
+                    "fullPath": "\\sayori\\nose",
+                    "dirs": [],
+                    "files": [
+                        "sayori_tapping_nose_n1.png",
+                        "sayori_tapping_nose_n2.png",
+                        "sayori_tapping_nose_n3.png",
+                        "sayori_tapping_nose_n4.png",
+                        "sayori_tapping_nose_n5.png",
+                        "sayori_turned_nose_n1.png",
+                        "sayori_turned_nose_n2.png",
+                        "sayori_turned_nose_n3.png",
+                        "sayori_turned_nose_n4.png",
+                        "sayori_turned_nose_nl.png"
+                    ]
+                }
+            ],
+            "files": []
+        },
+        {
+            "name": "yuri",
+            "fullPath": "\\yuri",
+            "dirs": [
+                {
+                    "name": "body",
+                    "fullPath": "\\yuri\\body",
+                    "dirs": [],
+                    "files": [
+                        "yuri_shy_casual_bodybase.png",
+                        "yuri_shy_uniform_bodybase.png",
+                        "yuri_turned_casual_left_down.png",
+                        "yuri_turned_casual_left_up.png",
+                        "yuri_turned_casual_right_down.png",
+                        "yuri_turned_casual_right_up.png",
+                        "yuri_turned_funeral_left_down.png",
+                        "yuri_turned_funeral_left_up.png",
+                        "yuri_turned_funeral_right_down.png",
+                        "yuri_turned_funeral_right_up.png",
+                        "yuri_turned_uniform_left_down.png",
+                        "yuri_turned_uniform_left_up.png",
+                        "yuri_turned_uniform_right_cut.png",
+                        "yuri_turned_uniform_right_down.png",
+                        "yuri_turned_uniform_right_up.png"
+                    ]
+                },
+                {
+                    "name": "brows",
+                    "fullPath": "\\yuri\\brows",
+                    "dirs": [],
+                    "files": [
+                        "yuri_shy_eyebrows_b1.png",
+                        "yuri_shy_eyebrows_b2.png",
+                        "yuri_shy_eyebrows_b3.png",
+                        "yuri_turned_eyebrows_b1a.png",
+                        "yuri_turned_eyebrows_b1b.png",
+                        "yuri_turned_eyebrows_b1c.png",
+                        "yuri_turned_eyebrows_b1d.png",
+                        "yuri_turned_eyebrows_b1e.png",
+                        "yuri_turned_eyebrows_b1f.png",
+                        "yuri_turned_eyebrows_b2a.png",
+                        "yuri_turned_eyebrows_b2b.png",
+                        "yuri_turned_eyebrows_b2c.png",
+                        "yuri_turned_eyebrows_b3a.png",
+                        "yuri_turned_eyebrows_b3b.png",
+                        "yuri_turned_eyebrows_b3c.png"
+                    ]
+                },
+                {
+                    "name": "extra",
+                    "fullPath": "\\yuri\\extra",
+                    "dirs": [],
+                    "files": [
+                        "yuri_turned_special_scream.png"
+                    ]
+                },
+                {
+                    "name": "eyes",
+                    "fullPath": "\\yuri\\eyes",
+                    "dirs": [],
+                    "files": [
+                        "yuri_shy_eyes_e1.png",
+                        "yuri_shy_eyes_e2.png",
+                        "yuri_shy_eyes_e3.png",
+                        "yuri_shy_eyes_e4.png",
+                        "yuri_shy_eyes_e5.png",
+                        "yuri_shy_eyes_e6.png",
+                        "yuri_turned_eyes_e0a.png",
+                        "yuri_turned_eyes_e0b.png",
+                        "yuri_turned_eyes_e1a.png",
+                        "yuri_turned_eyes_e1b.png",
+                        "yuri_turned_eyes_e1c.png",
+                        "yuri_turned_eyes_e1d.png",
+                        "yuri_turned_eyes_e1e.png",
+                        "yuri_turned_eyes_e1f.png",
+                        "yuri_turned_eyes_e1g.png",
+                        "yuri_turned_eyes_e1h.png",
+                        "yuri_turned_eyes_e2a.png",
+                        "yuri_turned_eyes_e2b.png",
+                        "yuri_turned_eyes_e2c.png",
+                        "yuri_turned_eyes_e2d.png",
+                        "yuri_turned_eyes_e3a.png",
+                        "yuri_turned_eyes_e3b.png",
+                        "yuri_turned_eyes_e4a.png",
+                        "yuri_turned_eyes_e4b.png",
+                        "yuri_turned_eyes_e4c.png",
+                        "yuri_turned_eyes_e4d.png",
+                        "yuri_turned_eyes_e4e.png",
+                        "yuri_turned_eyes_ela.png",
+                        "yuri_turned_eyes_elb.png"
+                    ]
+                },
+                {
+                    "name": "head",
+                    "fullPath": "\\yuri\\head",
+                    "dirs": [],
+                    "files": [
+                        "yuri_shy_facebase.png",
+                        "yuri_turned_facebase.png"
+                    ]
+                },
+                {
+                    "name": "mouth",
+                    "fullPath": "\\yuri\\mouth",
+                    "dirs": [],
+                    "files": [
+                        "yuri_shy_mouth_m1.png",
+                        "yuri_shy_mouth_m2.png",
+                        "yuri_shy_mouth_m3.png",
+                        "yuri_shy_mouth_m4.png",
+                        "yuri_turned_mouth_ma.png",
+                        "yuri_turned_mouth_mb.png",
+                        "yuri_turned_mouth_mc.png",
+                        "yuri_turned_mouth_md.png",
+                        "yuri_turned_mouth_me.png",
+                        "yuri_turned_mouth_mf.png",
+                        "yuri_turned_mouth_mg.png",
+                        "yuri_turned_mouth_mh.png",
+                        "yuri_turned_mouth_mi.png",
+                        "yuri_turned_mouth_mj.png",
+                        "yuri_turned_mouth_mk.png",
+                        "yuri_turned_mouth_ml.png",
+                        "yuri_turned_mouth_mla.png",
+                        "yuri_turned_mouth_mlb.png",
+                        "yuri_turned_mouth_mlc.png",
+                        "yuri_turned_mouth_mld.png",
+                        "yuri_turned_mouth_mm.png",
+                        "yuri_turned_mouth_mn.png",
+                        "yuri_turned_mouth_mo.png",
+                        "yuri_turned_mouth_mp.png",
+                        "yuri_turned_mouth_mq.png",
+                        "yuri_turned_mouth_mr.png"
+                    ]
+                },
+                {
+                    "name": "nose",
+                    "fullPath": "\\yuri\\nose",
+                    "dirs": [],
+                    "files": [
+                        "yuri_shy_nose_n1.png",
+                        "yuri_shy_nose_n2.png",
+                        "yuri_shy_nose_n3.png",
+                        "yuri_shy_nose_n4.png",
+                        "yuri_shy_nose_n5.png",
+                        "yuri_turned_nose_n1.png",
+                        "yuri_turned_nose_n2.png",
+                        "yuri_turned_nose_n3.png",
+                        "yuri_turned_nose_n4.png"
+                    ]
+                }
+            ],
+            "files": []
+        }
+    ],
+    "files": [
+        "AboutAssets.txt",
+        "autosort.py",
+        "map.json",
+        "map.txt"
+    ]
+}
