@@ -347,7 +347,9 @@
                     ]
                 }
             ],
-            "files": []
+            "files": [
+                "defaults.json"
+            ]
         },
         {
             "name": "sayori",

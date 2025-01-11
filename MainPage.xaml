@@ -6,41 +6,40 @@
              x:Class="losertron4000.MainPage">
 
     <Grid x:Name="centralGrid" RowSpacing="0" ColumnSpacing="0">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
 
-        <Image x:Name="dokiPreview" Grid.Row="0"
+        <Image x:Name="dokiPreview" Grid.Column="1"
                Source="sample.png"
                Aspect="AspectFit"
                HorizontalOptions="FillAndExpand"
                VerticalOptions="FillAndExpand" />
 
 
+        <StackLayout x:Name="bottomBit">
+            <ScrollView x:Name="tabScroll" Orientation="Horizontal">
+                <Grid x:Name="tabGrid" ColumnSpacing="4">
 
-        <ScrollView Grid.Row="1"                         
-                    HorizontalOptions="FillAndExpand"
-                    VerticalOptions="FillAndExpand">
-            <Grid x:Name="itemGrid"  RowSpacing="10" ColumnSpacing="10">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
+                </Grid>
+            </ScrollView>
+            <ScrollView x:Name="imageScroll" Grid.Column="0"                         
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="FillAndExpand">
+                <Grid x:Name="itemGrid"  RowSpacing="10" ColumnSpacing="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
 
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-
-                <!--<Label x:Name="gogo" Grid.Row="0" Grid.Column="0" Text="Item (0,0)" />
-                <Image x:Name="testimg1" Grid.Row="0" Grid.Column="1" Source="sample.png" Aspect="AspectFit" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" />
-                <Image x:Name="testimg2" Grid.Row="0" Grid.Column="2" Source="sample.png" Aspect="AspectFit" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" />
-
-                <Label Grid.Row="1" Grid.Column="0" Text="Item (1,0)" />
-                <Label Grid.Row="1" Grid.Column="1" Text="Item (1,1)" />
-                <Label Grid.Row="1" Grid.Column="2" Text="Item (1,2)" />-->
-            </Grid>
-        </ScrollView>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                </Grid>
+            </ScrollView>
+        </StackLayout>
+        
     </Grid>
 </ContentPage>

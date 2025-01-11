@@ -9,6 +9,12 @@ namespace losertron4000
 
         public static void Init()
         {
+            if (System.OperatingSystem.IsAndroid())
+            {
+                Path.GoodSep = '/';
+                Path.BadSep = '\\';
+            }
+
             using var stream = Microsoft.Maui.Storage.FileSystem.OpenAppPackageFileAsync("map.json").Result;
             using var reader = new StreamReader(stream);
             var rawJson = reader.ReadToEnd();
@@ -16,8 +22,6 @@ namespace losertron4000
 
             _dirs = JsonSerializer.Deserialize<Directory>(rawJson);
         }
-
-
 
         public static Path[] GetDirectories() => GetDirectories(new());
         public static Path[] GetDirectories(Path path)
@@ -151,9 +155,15 @@ namespace losertron4000
     {
         private readonly string _path;
 
+
+        public static char GoodSep = '\\';
+        public static char BadSep = '/';
+
+
+
         public Path(string path)
         {
-            _path = path.Replace("/", "\\").TrimStart('\\', '/').TrimEnd('\\', '/');
+            _path = path.Replace(BadSep, GoodSep).TrimStart('\\', '/').TrimEnd('\\', '/');
         }
         public Path()
         {
@@ -207,17 +217,18 @@ namespace losertron4000
 
         public Path RelativeTo(Path basePath)
         {
-            Uri baseUri = new Uri(basePath._path.EndsWith("\\")
+            Uri baseUri = new Uri(basePath._path.EndsWith(GoodSep)
                                   ? basePath._path
-                                  : basePath._path + "\\");
+                                  : basePath._path + GoodSep);
             Uri targetUri = new Uri(_path);
             Uri relativeUri = baseUri.MakeRelativeUri(targetUri);
             string relativePath = Uri.UnescapeDataString(relativeUri.ToString());
-            return new Path(relativePath.Replace("/", "\\"));
+            return new Path(relativePath.Replace(BadSep, GoodSep));
         }
 
         public string FileName => GetFileName(_path);
 
+        public static Path Cache { get { return Microsoft.Maui.Storage.FileSystem.CacheDirectory; } }
         public static string GetDirectoryName(string path)
         {
             if (string.IsNullOrEmpty(path))
@@ -234,11 +245,11 @@ namespace losertron4000
             }
 
             // Normalize slashes for consistency.
-            path = path.Replace('/', '\\');
+            path = path.Replace(BadSep, GoodSep);
 
 
 
-            int lastSlashIndex = path.LastIndexOf('\\');
+            int lastSlashIndex = path.LastIndexOf(GoodSep);
 
             // If there are no slashes, the path has no directory component.
             if (lastSlashIndex == -1)
@@ -266,11 +277,11 @@ namespace losertron4000
             path = path.Trim();
 
             // Normalize slashes for consistency.
-            path = path.Replace('/', '\\');
+            path = path.Replace(BadSep, GoodSep);
 
 
 
-            int lastSlashIndex = path.LastIndexOf('\\');
+            int lastSlashIndex = path.LastIndexOf(GoodSep);
 
             // If there are no slashes, the entire path is the file name.
             if (lastSlashIndex == -1)
