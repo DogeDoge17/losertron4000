@@ -99,6 +99,9 @@ namespace losertron4000
 
         private static Directory SeekToDir(Path path)
         {
+            if (path == string.Empty)
+                return _dirs;
+
             string[] folders = path.ToString().TrimStart('\\', '/').TrimEnd('\\', '/').Split(new char[] { '\\', '/' });
 
             Directory targ = _dirs;
@@ -156,8 +159,14 @@ namespace losertron4000
         private readonly string _path;
 
 
+#if WINDOWS
         public static char GoodSep = '\\';
         public static char BadSep = '/';
+#else
+        public static char GoodSep = '/';
+        public static char BadSep = '\\';
+#endif
+        
 
 
 
@@ -179,7 +188,7 @@ namespace losertron4000
 
         public static Path operator /(Path left, Path right)
         {
-            return new Path(System.IO.Path.Combine(left._path, right._path));
+            return new Path((left._path.TrimEnd('\\', '/') + GoodSep + right._path.TrimStart('\\', '/')).Replace(BadSep,GoodSep));
         }
 
         public override string ToString()
@@ -214,6 +223,14 @@ namespace losertron4000
                 return System.IO.Path.GetExtension(_path);
             }
         }
+
+#if ANDROID
+public static Path PhotosDirectory = Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryPictures)?.AbsolutePath/ new Path("losertron4000");
+#elif IOS || MACCATALYST
+        public static Path PhotosDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) / new Path("losertron4000");
+#elif WINDOWS
+public static Path PhotosDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) / new Path("losertron4000");
+#endif
 
         public Path RelativeTo(Path basePath)
         {

@@ -149,7 +149,9 @@
                     ]
                 }
             ],
-            "files": []
+            "files": [
+                "defaults.json"
+            ]
         },
         {
             "name": "natsuki",
@@ -507,7 +509,9 @@
                     ]
                 }
             ],
-            "files": []
+            "files": [
+                "defaults.json"
+            ]
         },
         {
             "name": "yuri",
@@ -660,7 +664,9 @@
                     ]
                 }
             ],
-            "files": []
+            "files": [
+                "defaults.json"
+            ]
         }
     ],
     "files": [

@@ -11,11 +11,27 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <Image x:Name="dokiPreview" Grid.Column="1"
-               Source="sample.png"
-               Aspect="AspectFit"
-               HorizontalOptions="FillAndExpand"
-               VerticalOptions="FillAndExpand" />
+        <Grid x:Name="imageGrid" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+           <Image x:Name="dokiPreview"
+            Source="sample.png"
+            Aspect="AspectFit"
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="FillAndExpand" />
+
+            <Grid ColumnDefinitions="Auto,*,Auto" x:Name="topBar">
+                <Picker x:Name="girlPicker" Grid.Column="0"/>
+                <Button Clicked="OnSavedClicked" x:Name="saveBtn" Text="SAVE" Grid.Column="2"/>
+            </Grid>
+        </Grid>
+    
 
 
         <StackLayout x:Name="bottomBit">
