@@ -7,4 +7,5 @@
 
  Works as a desktop app and a mobile app (layout changes with aspect ratio)\
  ![Photo of Natsuki on the mobile app](https://i.imgur.com/RL5UsOx.png)
+ ![Photo of Natsuki on the desktop app](https://i.imgur.com/8GtAHUs.png)
  
