@@ -1,22 +1,22 @@
 {
   "groups": [
-    [ "forward", "ff" ],
-    [ "sad" , "fs"]
+    [ "forward" ],
+    [ "lean" ]
   ],
 
   "folders": [
     {
       "name": "body",
-      "bypass": [ "cross" ],
+      "bypass": [ "lean" ],
       "max": 2,
-      "default": [ "natsuki_turned_uniform_left_down.png", "natsuki_turned_uniform_right_down.png" ],
+      "default": [ "monika_forward_uniform_left_point.png", "monika_forward_uniform_right_down.png" ],
       "z-index": 0
     },
     {
       "name": "head",
       "bypass": [],
       "max": 1,
-      "default": [ "natsuki_face_forward.png" ],
+      "default": [ "monika_forward_facebase.png" ],
       "z-index": 1
     },
     {

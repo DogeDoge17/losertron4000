@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             xmlns:local="clr-namespace:losertron4000"
              x:Class="losertron4000.MainPage">
 
     <Grid x:Name="centralGrid" RowSpacing="0" ColumnSpacing="0">
@@ -26,9 +27,10 @@
             HorizontalOptions="FillAndExpand"
             VerticalOptions="FillAndExpand" />
 
-            <Grid ColumnDefinitions="Auto,*,Auto" x:Name="topBar">
+            <Grid ColumnDefinitions="Auto,Auto,*,Auto" x:Name="topBar">
                 <Picker x:Name="girlPicker" Grid.Column="0"/>
-                <Button Clicked="OnSavedClicked" x:Name="saveBtn" Text="SAVE" Grid.Column="2"/>
+                <!--<ImageButton Source="Images/refresh.svg" x:Name="refreshGirl" Grid.Column="1"/>-->
+                <Button Clicked="OnSavedClicked" x:Name="saveBtn" Text="SAVE" Grid.Column="3"/>
             </Grid>
         </Grid>
     
@@ -40,7 +42,33 @@
 
                 </Grid>
             </ScrollView>
-            <ScrollView x:Name="imageScroll" Grid.Column="0"                         
+
+            <CollectionView x:Name="imageCollection" 
+                Grid.Column="0"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand" 
+                ItemsSource="{Binding MyItems}">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" Span="3" />
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Padding="10">
+                            <local:DokiExpression 
+                                Clicked="OnExpressionClicked" 
+                                Source="{Binding TrueUri}"
+                                Uri="{Binding Uri}" 
+                                BackgroundColor="{Binding BackgroundColor}"
+                                Category="{Binding Category}"  
+                                Aspect="AspectFit"    
+                                SizeChanged="ExpressionSize"/>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <!--<ScrollView x:Name="imageScroll" Grid.Column="0"                         
             HorizontalOptions="FillAndExpand"
             VerticalOptions="FillAndExpand">
                 <Grid x:Name="itemGrid"  RowSpacing="10" ColumnSpacing="10">
@@ -54,7 +82,7 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                 </Grid>
-            </ScrollView>
+            </ScrollView>-->
         </StackLayout>
         
     </Grid>

@@ -1,6 +1,6 @@
 {
   "groups": [
-    [ "forward", "ff" ],
+    [ "forward", "ff", "turned"],
     [ "sad" , "fs"]
   ],
 

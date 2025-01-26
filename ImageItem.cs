@@ -1,26 +1,133 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace losertron4000
 {
-    public class ImageItem : ImageButton
+    public class DokiExpression : ImageButton
     {
-        public Bitmap ImagePreview { get { return _imagePreview; } set { _imagePreview = value; Source = _imagePreview; } }
-        private Bitmap _imagePreview { get; set; }
+        public static readonly BindableProperty UriProperty =
+           BindableProperty.Create(
+               nameof(Uri),                // Property name
+               typeof(string),                    // Property type
+               typeof(ImageItem),           // Declaring type
+               string.Empty);
+
+        public static readonly BindableProperty CategoryProperty =
+           BindableProperty.Create(
+               nameof(Category),                // Property name
+               typeof(string),                    // Property type
+               typeof(ImageItem),           // Declaring type
+               string.Empty);
 
 
-        public Path Uri { get; private set; }
+        public string Uri
+        {
+            get => (string)GetValue(UriProperty);
+            set => SetValue(UriProperty, value);
+        }
 
-        public string Category { get; set; }
+        public string Category
+        {
+            get => (string)GetValue(CategoryProperty);
+            set => SetValue(CategoryProperty, value);
+        }     
+    }
 
-        public bool Selected { get; set; }
 
-        public ImageItem(Path imageUri) => Uri = imageUri;
-        public ImageItem() { }
 
-        public void SetUri(Path imageUri) => Uri = imageUri;
+    public class ImageItem : INotifyPropertyChanged
+    {
+        private string trueUri;
+        public string TrueUri
+        {
+            get => trueUri;
+            set
+            {
+                if (trueUri != value)
+                {
+                    trueUri = value;
+                    OnPropertyChanged(nameof(TrueUri));
+                }
+            }
+        }
+
+        private Path uri;
+        public Path Uri
+        {
+            get => uri;
+            set
+            {
+                if (uri != value)
+                {
+                    uri = value;
+                    OnPropertyChanged(nameof(Uri));
+                }
+            }
+        }
+
+        private string category;
+        public string Category
+        {
+            get => category;
+            set
+            {
+                if (category != value)
+                {
+                    category = value;
+                    OnPropertyChanged(nameof(Category));
+                }
+            }
+        }
+
+        private Color backgroundColor;
+        public Color BackgroundColor
+        {
+            get => backgroundColor;
+            set
+            {
+                if (backgroundColor != value)
+                {
+                    backgroundColor = value;
+                    OnPropertyChanged(nameof(BackgroundColor));
+                }
+            }
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public bool Equals(ImageItem other)
+        {
+            return TrueUri.Equals(other.TrueUri) && Uri.ToString().Equals(other.Uri.ToString()) && Category.Equals(other.Category) && BackgroundColor.Equals(other.BackgroundColor);
+        }
+
+        public bool Equals(DokiExpression other)
+        {
+            return Uri.ToString().Equals(other.Uri.ToString()) && Category.Equals(other.Category) && BackgroundColor.Equals(other.BackgroundColor);
+        }
+
+        public ImageItem(Path imageUri)
+        {
+            Uri = imageUri;
+            TrueUri = imageUri.ToString();
+            Category = string.Empty;
+            BackgroundColor = Colors.Transparent;
+        }
+
+        public ImageItem(DokiExpression ex)
+        {
+            Uri = new Path(ex.Uri);
+            TrueUri = ex.Uri;
+            Category = ex.Category;
+            BackgroundColor = Colors.Transparent;
+        }
     }
 }
