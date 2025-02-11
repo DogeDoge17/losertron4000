@@ -107,7 +107,7 @@ namespace losertron4000
             //return ImageSource.FromStream(() => bmp.stream);
         }
 
-        public static void PreviewSize(Image<Rgba32> img) => img.Mutate(ctx => ctx.Resize(150, 0)); //img.Mutate(ctx => ctx.Resize(0, 494));
+        public static void PreviewSize(Image<Rgba32> img) => img.Mutate(ctx => ctx.Resize(250, 0)); //img.Mutate(ctx => ctx.Resize(0, 494));
         public static void NoTransparency(Image<Rgba32> img) => img.Mutate(ctx => ctx.BackgroundColor(SixLabors.ImageSharp.Color.ParseHex("2c2c2c")));
 
         public static void CropImage(Image<Rgba32> img)

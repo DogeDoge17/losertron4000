@@ -672,7 +672,6 @@
     "files": [
         "AboutAssets.txt",
         "autosort.py",
-        "map.json",
-        "map.txt"
+        "map.json"
     ]
 }

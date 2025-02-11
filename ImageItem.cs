@@ -97,6 +97,20 @@ namespace losertron4000
             }
         }
 
+        private bool enabled = true;
+        public bool IsEnabled
+        {
+            get => enabled;
+            set
+            {
+                if (enabled != value)
+                {
+                    enabled = value;
+                    OnPropertyChanged(nameof(IsEnabled));
+                }
+            }
+        }
+
         public event PropertyChangedEventHandler? PropertyChanged;
 
         protected void OnPropertyChanged(string propertyName)
@@ -122,12 +136,22 @@ namespace losertron4000
             BackgroundColor = Colors.Transparent;
         }
 
+        public ImageItem()
+        {
+            Uri = new Path("");
+            TrueUri = Uri;
+            Category = "";
+            BackgroundColor = Colors.Transparent;
+            IsEnabled = false;
+        }
+
         public ImageItem(DokiExpression ex)
         {
             Uri = new Path(ex.Uri);
             TrueUri = ex.Uri;
             Category = ex.Category;
             BackgroundColor = Colors.Transparent;
+            IsEnabled = ex.IsEnabled;
         }
     }
 }

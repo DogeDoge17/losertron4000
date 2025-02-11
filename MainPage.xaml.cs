@@ -1,16 +1,10 @@
 ﻿using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Core;
-using CommunityToolkit.Maui.Core.Primitives;
-using Microsoft.Maui.Controls;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Numerics;
-using System.Runtime.InteropServices.Marshalling;
 using System.Text.Json;
-using System.Threading;
 
 namespace losertron4000
 {
@@ -19,6 +13,8 @@ namespace losertron4000
         public static string girl = "natsuki";
 
         public Dictionary<string, ObservableCollection<ImageItem>> expressions;
+        private ColListView<ImageItem> expressView;
+
         public GirlsGirling _girlDefaults;
         private List<ImageItem> _selectedExpressions;
 
@@ -33,9 +29,7 @@ namespace losertron4000
         {
             InitializeComponent();
             SetLayout(DeviceDisplay.MainDisplayInfo.Width, DeviceDisplay.MainDisplayInfo.Height);
-            FileSystem.Init();
-            Debug.WriteLine(Path.Cache);
-            //dokiPreview.Source = new Bitmap("natsuki\\head\\natsuki_face_forward.png").CropImage(false);//Bitmap.FileToSource("natsuki\\head\\natsuki_face_forward.png");//Bitmap.FullProcessSource("natsuki\\head\\natsuki_face_forward.png", Bitmap.CropImage);//nats.CropImage(false);
+            FileSystem.Init();           
             LoadGirls();
 
         }
@@ -57,7 +51,7 @@ namespace losertron4000
         private void ReinitGirls(object? sender, EventArgs e)
         {
             girl = girlPicker.Items[girlPicker.SelectedIndex].ToLower();
-
+            ListView adf;
             LoadImageData();
             ConstructImageButtons();
             ChooseDefaults();
@@ -68,11 +62,9 @@ namespace losertron4000
         {
             var folders = FileSystem.GetDirectories(girl);
             expressions = new(folders.Length);
-            //imageCollection.cl
             tabGrid.Clear();
 
             _girlDefaults = JsonSerializer.Deserialize<GirlsGirling>(FileSystem.ReadFile(new Path(girl) / "defaults.json"));
-
 
             for (int i = 0; i < folders.Length; i++)
             {
@@ -119,14 +111,18 @@ namespace losertron4000
             }
         }
 
+        private void ExpressionListSize(object? sender, EventArgs e)
+        {
+            buttonListView.RowHeight = (int)(buttonListView.Width / 3);
+        }
+
         private void ExpressionSize(object? sender, EventArgs e)
         {
-            DokiExpression img = (DokiExpression)sender;
-            if (img.Width > 0)
-            {
-                img.HeightRequest = img.Width;  // Ensure the image stays square
-            }
-
+            //DokiExpression img = (DokiExpression)sender;
+            //if (img.Width > 0 && img.HeightRequest != img.Width)
+            //{
+            //    img.HeightRequest = img.Width;
+            //}
         }
 
         private void ChooseDefaults()
@@ -150,7 +146,7 @@ namespace losertron4000
 
 
 
-        private void ConstructDoki(bool export = false)
+        private async void ConstructDoki(bool export = false)
         {
             using Image<Rgba32> img = new Image<Rgba32>(960, 960);
 
@@ -171,7 +167,10 @@ namespace losertron4000
             if (!export)
             {
                 Bitmap.CropImage(img);
-                dokiPreview.Source = Bitmap.ImageToSource(img);
+                await MainThread.InvokeOnMainThreadAsync(() =>
+                {
+                    dokiPreview.Source = Bitmap.ImageToSource(img);                    
+                });               
             }
             else
             {
@@ -187,8 +186,7 @@ namespace losertron4000
         // Update the gallery
         Android.Media.MediaScannerConnection.ScanFile(Android.App.Application.Context, new string[] { Path.PhotosDirectory / $"{girl}-{i}.png" }, null, null);
 #endif
-
-                Toast.Make($"{girl} saved to {Path.PhotosDirectory / $"{girl}-{i}.png"}", ToastDuration.Short, 14).Show(); // Text size set to 12                                
+                await Toast.Make($"{girl} saved to {Path.PhotosDirectory / $"{girl}-{i}.png"}", ToastDuration.Short, 14).Show();                         
             }
 
         }
@@ -199,7 +197,7 @@ namespace losertron4000
             //var folders = FileSystem.GetDirectories(girl);
             //expressions = new(folders.Length);
 
-            ///*itemGrid = new Grid
+            //itemGrid = new Grid
             //{
             //    ColumnDefinitions =
             //    {
@@ -207,7 +205,7 @@ namespace losertron4000
             //        new ColumnDefinition { Width = GridLength.Star },
             //        new ColumnDefinition { Width = GridLength.Star }
             //    }
-            //};*/
+            //};
             if (_loadingImages)
                 return;
 
@@ -237,23 +235,30 @@ namespace losertron4000
 
             for (int i = 0; i < theWitch.Count; i++)
             {
-                int y = i / 3;
-                int x = i % 3;
+                //int y = i / 3;
+                //int x = i % 3;
 
                 theWitch[i].TrueUri = Path.Cache / theWitch[i].Uri;
-
+                //theWitch[i].ImageSource = new UriImageSource() { Uri = new(Path.Cache / theWitch[i].Uri), CachingEnabled = true, CacheValidity = TimeSpan.FromDays(1)};
                 //itemGrid.Add(theWitch[i], x, y);
             }
-            imageCollection.ItemsSource = theWitch;
+            //imageCollection.ItemsSource = theWitch;
+
+            //expressView = new(theWitch, imageCollection1, imageCollection2, imageCollection3);
+            expressView = new(theWitch, buttonListView, 3);
+            buttonListView.RowHeight = (int)(buttonListView.Width / 3);
+
+            //List<ImageItem> pmo = new List<ImageItem> { theWitch[0] };
+
+            //buttonListView.ItemsSource = pmo;
+
             _loadingImages = false;
         }
-
 
         private void SortExpressions()
         {
             var folderIndexMap = _girlDefaults.Folders.ToDictionary(folder => folder.Name, folder => folder.ZIndex);
 
-            // Sort items by category based on the ZIndex found in folderIndexMap
             _selectedExpressions = _selectedExpressions.OrderBy(item => folderIndexMap.TryGetValue(item.Category, out int zIndex) ? zIndex : int.MaxValue).ToList();
         }
 
@@ -294,7 +299,6 @@ namespace losertron4000
             }
             else
                 groupIds = _girlDefaults.Groups?.FirstOrDefault(ids => ids.Any(grp => item.Uri.ToString().Contains(grp)));
-
 
 
             for (int i = 0; i < expressions.Count; i++)
@@ -343,7 +347,7 @@ namespace losertron4000
 
         }
 
-        private void OnExpressionClicked(object sender, EventArgs e)
+        private async void OnExpressionClicked(object sender, EventArgs e)
         {
             ImageItem item;
             if (sender.GetType() == typeof(DokiExpression))
@@ -355,8 +359,6 @@ namespace losertron4000
             }
             else
                 item = (ImageItem)sender;
-
-
 
             if (_selectedExpressions.IndexOf(item) == -1)
             {
@@ -370,27 +372,27 @@ namespace losertron4000
                 item.BackgroundColor = Colors.Transparent;
                 _selectedExpressions.Remove(item);
             }
-            imageCollection.ItemsSource = expressions.Values.ToList()[_selectedGroup];
+            //imageCollection.ItemsSource = expressions.Values.ToList()[_selectedGroup];
             SortExpressions();
-            ConstructDoki(false);
+            await Task.Run(() => ConstructDoki(false));
         }
 
-        private void OnSavedClicked(object sender, EventArgs e)
+        private async void OnSavedClicked(object sender, EventArgs e)
         {
-            ConstructDoki(true);
+            await Task.Run(() => ConstructDoki(true));
         }
 
         private void OnTabClicked(object? sender, TappedEventArgs e)
         {
-            Label lbl = (Label)sender;
+            Label tabLbl = (Label)sender;
 
             foreach (Label tab in tabGrid.Children)
             {
                 tab.BackgroundColor = Colors.Transparent;
             }
 
-            lbl.BackgroundColor = (Microsoft.Maui.Graphics.Color)Application.Current.Resources["Primary"];
-            _selectedGroup = tabGrid.Children.IndexOf(lbl);
+            tabLbl.BackgroundColor = (Microsoft.Maui.Graphics.Color)Application.Current.Resources["Primary"];
+            _selectedGroup = tabGrid.Children.IndexOf(tabLbl);
             ConstructImageButtons();
         }
 
@@ -400,11 +402,22 @@ namespace losertron4000
             SetLayout(width, height);
         }
 
+
+        private byte _lastAspect = 3;
+
         private void SetLayout(double width, double height)
         {
             double aspectRatio = width / height;
 
-            if (aspectRatio > 1) //horizontal
+            byte asp = (byte)(aspectRatio > 1 ? 1 : 0);
+
+
+            if (_lastAspect == asp)
+                return;
+
+            _lastAspect = asp;
+
+            if (asp == 1) //horizontal
             {
                 centralGrid.ColumnDefinitions = new()
                 {
