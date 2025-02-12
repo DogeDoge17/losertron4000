@@ -13,7 +13,6 @@ namespace losertron4000
         public static string girl = "natsuki";
 
         public Dictionary<string, ObservableCollection<ImageItem>> expressions;
-        private ColListView<ImageItem> expressView;
 
         public GirlsGirling _girlDefaults;
         private List<ImageItem> _selectedExpressions;
@@ -28,7 +27,7 @@ namespace losertron4000
         public MainPage()
         {
             InitializeComponent();
-            SetLayout(DeviceDisplay.MainDisplayInfo.Width, DeviceDisplay.MainDisplayInfo.Height);
+            OnSizeAllocated(DeviceDisplay.MainDisplayInfo.Width, DeviceDisplay.MainDisplayInfo.Height);
             FileSystem.Init();           
             LoadGirls();
 
@@ -51,7 +50,6 @@ namespace losertron4000
         private void ReinitGirls(object? sender, EventArgs e)
         {
             girl = girlPicker.Items[girlPicker.SelectedIndex].ToLower();
-            ListView adf;
             LoadImageData();
             ConstructImageButtons();
             ChooseDefaults();
@@ -245,12 +243,14 @@ namespace losertron4000
             //imageCollection.ItemsSource = theWitch;
 
             //expressView = new(theWitch, imageCollection1, imageCollection2, imageCollection3);
-            expressView = new(theWitch, buttonListView, 3);
-            buttonListView.RowHeight = (int)(buttonListView.Width / 3);
+            new ColListView<ImageItem>(theWitch, buttonListView, 3);
+            //buttonListView.RowHeight = (int)(buttonListView.Width / 3);
 
             //List<ImageItem> pmo = new List<ImageItem> { theWitch[0] };
 
             //buttonListView.ItemsSource = pmo;
+
+
 
             _loadingImages = false;
         }
@@ -344,7 +344,6 @@ namespace losertron4000
                 expression.BackgroundColor = Colors.Transparent;
                 _selectedExpressions.Remove(expression);
             }
-
         }
 
         private async void OnExpressionClicked(object sender, EventArgs e)
@@ -396,21 +395,14 @@ namespace losertron4000
             ConstructImageButtons();
         }
 
+        private byte _lastAspect = 3;
         protected override void OnSizeAllocated(double width, double height)
         {
             base.OnSizeAllocated(width, height);
-            SetLayout(width, height);
-        }
 
 
-        private byte _lastAspect = 3;
-
-        private void SetLayout(double width, double height)
-        {
             double aspectRatio = width / height;
-
             byte asp = (byte)(aspectRatio > 1 ? 1 : 0);
-
 
             if (_lastAspect == asp)
                 return;
@@ -467,7 +459,7 @@ namespace losertron4000
                 imageGrid.SetRow(topBar, 0);
                 imageGrid.SetRow(dokiPreview, 1);
             }
-        }
+        }        
     }
 
 }

@@ -68,6 +68,9 @@
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-android|AnyCPU'">
 	  <ApplicationId>com.dog3y.losertron4000</ApplicationId>
 	  <Debugger>Xamarin</Debugger>
+    <EnableLLVM>true</EnableLLVM>
+    <RunAOTCompilation>true</RunAOTCompilation>
+    <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-ios|AnyCPU'">

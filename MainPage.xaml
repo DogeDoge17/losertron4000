@@ -43,12 +43,38 @@
                 </Grid>
             </ScrollView>
 
-            <ListView x:Name="buttonListView" SizeChanged="ExpressionListSize" ItemsSource="{Binding noting}">
+            <!--<CollectionView x:Name="imageCollection" 
+                Grid.Column="0"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand" 
+                
+                >
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" Span="3" />
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                            <local:DokiExpression 
+                                Clicked="OnExpressionClicked" 
+                                Source="{Binding TrueUri}"
+                                Uri="{Binding Uri}" 
+                                BackgroundColor="{Binding BackgroundColor}"
+                                Category="{Binding Category}"  
+                                Aspect="AspectFit"    
+                                SizeChanged="ExpressionSize"/>
+
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>-->
+            
+
+
+            <ListView x:Name="buttonListView" SizeChanged="ExpressionListSize" ItemsSource="{Binding noting}" SeparatorVisibility="None" SelectionMode="None">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-
-                            <Grid Padding="10" ColumnSpacing="10">
+                            <Grid Padding="5" ColumnSpacing="10">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="*" />
@@ -76,7 +102,6 @@
                                     SizeChanged="ExpressionSize"
                                     IsEnabled="{Binding [1].IsEnabled}"
                                     IsVisible="{Binding [1].IsEnabled}"/>
-                                
                                 <local:DokiExpression 
                                     Grid.Column="2"
                                     Clicked="OnExpressionClicked" 
@@ -89,40 +114,6 @@
                                     IsEnabled="{Binding [2].IsEnabled}"
                                     IsVisible="{Binding [2].IsEnabled}"/>
                             </Grid>
-
-                            <!--
-                                <local:DokiExpression 
-                                    Grid.Column="0"
-                                    Clicked="OnExpressionClicked" 
-                                    Source="{Binding [0].TrueUri}"
-                                    Uri="{Binding [0].Uri}" 
-                                    BackgroundColor="{Binding [0].BackgroundColor}"
-                                    Category="{Binding [0].Category}"  
-                                    Aspect="AspectFit"    
-                                    SizeChanged="ExpressionSize"
-                                    IsEnabled="{Binding [0].Enabled}"/>
-                                <local:DokiExpression 
-                                    Grid.Column="1"
-                                    Clicked="OnExpressionClicked" 
-                                    Source="{Binding [1].TrueUri}"
-                                    Uri="{Binding [1].Uri}" 
-                                    BackgroundColor="{Binding [1].BackgroundColor}"
-                                    Category="{Binding [1].Category}"  
-                                    Aspect="AspectFit"    
-                                    SizeChanged="ExpressionSize"
-                                    IsEnabled="{Binding [1].Enabled}"/>
-                                <local:DokiExpression 
-                                    Grid.Column="2"
-                                    Clicked="OnExpressionClicked" 
-                                    Source="{Binding [2].TrueUri}"
-                                    Uri="{Binding [2].Uri}" 
-                                    BackgroundColor="{Binding [2].BackgroundColor}"
-                                    Category="{Binding [2].Category}"  
-                                    Aspect="AspectFit"    
-                                    SizeChanged="ExpressionSize"
-                                    IsEnabled="{Binding [2].IsEnabled}"
-                                    IsVisible="{Binding [2].IsEnabled}"/>
-                            -->
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
@@ -135,15 +126,12 @@
                                         <VisualState x:Name="Normal" />
                                         <VisualState x:Name="Selected" />
                                         <VisualState x:Name="Pressed" />
-                                        <!-- Do not define hover state -->
                                     </VisualStateGroup>
                                 </VisualStateGroupList>
                             </Setter.Value>
                         </Setter>
                     </Style>
                 </ListView.Style>
-
-
             </ListView>
 
 
