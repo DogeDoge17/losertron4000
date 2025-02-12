@@ -21,7 +21,7 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-           <Image x:Name="dokiPreview"
+            <Image x:Name="dokiPreview"
             Source="sample.png"
             Aspect="AspectFit"
             HorizontalOptions="FillAndExpand"
@@ -33,42 +33,11 @@
                 <Button Clicked="OnSavedClicked" x:Name="saveBtn" Text="SAVE" Grid.Column="3"/>
             </Grid>
         </Grid>
-    
-
 
         <StackLayout x:Name="bottomBit">
             <ScrollView x:Name="tabScroll" Orientation="Horizontal">
-                <Grid x:Name="tabGrid" ColumnSpacing="4">
-
-                </Grid>
+                <Grid x:Name="tabGrid" ColumnSpacing="4"/>
             </ScrollView>
-
-            <!--<CollectionView x:Name="imageCollection" 
-                Grid.Column="0"
-                HorizontalOptions="FillAndExpand"
-                VerticalOptions="FillAndExpand" 
-                
-                >
-                <CollectionView.ItemsLayout>
-                    <GridItemsLayout Orientation="Vertical" Span="3" />
-                </CollectionView.ItemsLayout>
-
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                            <local:DokiExpression 
-                                Clicked="OnExpressionClicked" 
-                                Source="{Binding TrueUri}"
-                                Uri="{Binding Uri}" 
-                                BackgroundColor="{Binding BackgroundColor}"
-                                Category="{Binding Category}"  
-                                Aspect="AspectFit"    
-                                SizeChanged="ExpressionSize"/>
-
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>-->
-            
-
 
             <ListView x:Name="buttonListView" SizeChanged="ExpressionListSize" ItemsSource="{Binding noting}" SeparatorVisibility="None" SelectionMode="None">
                 <ListView.ItemTemplate>
@@ -114,174 +83,7 @@
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
-                <ListView.Style>
-                    <Style TargetType="ViewCell">
-                        <Setter Property="VisualStateManager.VisualStateGroups">
-                            <Setter.Value>
-                                <VisualStateGroupList>
-                                    <VisualStateGroup x:Name="CommonStates">
-                                        <VisualState x:Name="Normal" />
-                                        <VisualState x:Name="Selected" />
-                                        <VisualState x:Name="Pressed" />
-                                    </VisualStateGroup>
-                                </VisualStateGroupList>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </ListView.Style>
             </ListView>
-
-
-            <!--<Grid x:Name="listViewGrid" ColumnSpacing="4" VerticalOptions="FillAndExpand">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-
-                <ListView x:Name="imageCollection1" 
-    Grid.Column="0"
-    HorizontalOptions="FillAndExpand"
-    VerticalOptions="FillAndExpand" 
-    ItemsSource="{Binding MyItems}">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ViewCell>
-                                <local:DokiExpression 
-             Clicked="OnExpressionClicked" 
-             Source="{Binding TrueUri}"
-             Uri="{Binding Uri}" 
-             BackgroundColor="{Binding BackgroundColor}"
-             Category="{Binding Category}"  
-             Aspect="AspectFit"    
-             SizeChanged="ExpressionSize"/>
-                            </ViewCell>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </Grid>-->
-
-
-
-            <!--<Grid x:Name="listViewGrid" ColumnSpacing="4" VerticalOptions="FillAndExpand">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-
-                <ListView x:Name="imageCollection1" 
-                Grid.Column="0"
-                HorizontalOptions="FillAndExpand"
-                VerticalOptions="FillAndExpand" 
-                ItemsSource="{Binding MyItems}">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ViewCell>
-                                <local:DokiExpression 
-                         Clicked="OnExpressionClicked" 
-                         Source="{Binding TrueUri}"
-                         Uri="{Binding Uri}" 
-                         BackgroundColor="{Binding BackgroundColor}"
-                         Category="{Binding Category}"  
-                         Aspect="AspectFit"    
-                         SizeChanged="ExpressionSize"/>
-                            </ViewCell>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-                <ListView x:Name="imageCollection2" 
-                        Grid.Column="1"
-                        HorizontalOptions="FillAndExpand"
-                        VerticalOptions="FillAndExpand" 
-                        ItemsSource="{Binding MyItems}">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ViewCell>
-                                <local:DokiExpression 
-                                        Clicked="OnExpressionClicked" 
-                                        Source="{Binding TrueUri}"
-                                        Uri="{Binding Uri}" 
-                                        BackgroundColor="{Binding BackgroundColor}"
-                                        Category="{Binding Category}"  
-                                        Aspect="AspectFit"    
-                                        SizeChanged="ExpressionSize"/>
-                            </ViewCell>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-                <ListView x:Name="imageCollection3" 
-                    Grid.Column="2"
-                    HorizontalOptions="FillAndExpand"
-                    VerticalOptions="FillAndExpand" 
-                    ItemsSource="{Binding MyItems}">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ViewCell>
-                                    <local:DokiExpression 
-                                        Clicked="OnExpressionClicked" 
-                                        Source="{Binding TrueUri}"
-                                        Uri="{Binding Uri}" 
-                                        BackgroundColor="{Binding BackgroundColor}"
-                                        Category="{Binding Category}"  
-                                        Aspect="AspectFit"    
-                                        SizeChanged="ExpressionSize"/>
-                            </ViewCell>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </Grid>-->
-            
-            
-            
-            <!--<CollectionView x:Name="imageCollection" 
-                Grid.Column="0"
-                HorizontalOptions="FillAndExpand"
-                VerticalOptions="FillAndExpand" 
-                ItemSizingStrategy="MeasureFirstItem"
-                >
-                <CollectionView.ItemsLayout>
-                    <GridItemsLayout Orientation="Vertical" Span="3" />
-                </CollectionView.ItemsLayout>
-
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid Padding="10">
-                            <local:DokiExpression 
-                                Clicked="OnExpressionClicked" 
-                                Source="{Binding TrueUri}"
-                                Uri="{Binding Uri}" 
-                                BackgroundColor="{Binding BackgroundColor}"
-                                Category="{Binding Category}"  
-                                Aspect="AspectFit"    
-                                SizeChanged="ExpressionSize"/>
-                        </Grid>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>-->
-
-            <!--<ScrollView x:Name="imageScroll" Grid.Column="0"                         
-            HorizontalOptions="FillAndExpand"
-            VerticalOptions="FillAndExpand">
-                <Grid x:Name="itemGrid"  RowSpacing="10" ColumnSpacing="10">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                </Grid>
-            </ScrollView>-->
         </StackLayout>
-        
     </Grid>
 </ContentPage>
