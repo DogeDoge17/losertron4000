@@ -8,8 +8,8 @@ namespace losertron4000
         public string[][] Groups { get; set; }
 
         [JsonPropertyName("folders")]
-        public GirlieFolder[] Folders { get; set; }
-       
+        public List<GirlieFolder> Folders { get; set; }
+
     }
 
     public class GirlieFolder
@@ -18,7 +18,7 @@ namespace losertron4000
         public string Name { get; set; }
 
         [JsonPropertyName("bypass")]
-        public string[] Bypass { get; set; }
+        public List<string> Bypass { get; set; }
 
         [JsonPropertyName("max")]
         public int Max { get; set; }

@@ -33,6 +33,9 @@ namespace losertron4000
             this.stream = stream;
         }
 
+        /// <summary>
+        /// Converts an ImageSharp image to a usable MAUI image source
+        /// </summary>
         public static ImageSource ImageToSource(Image<Rgba32> img)
         {
             var stream = new MemoryStream();
@@ -41,16 +44,12 @@ namespace losertron4000
             return ImageSource.FromStream(() => stream);
             
         }
-        public static ImageSource FileToSource(Path path)
-        {
-            if (FileSystem.FileExists(path))
-            {               
-                return ImageSource.FromStream(() => FileSystem.OpenFile(path));
-            }
-            else
-                throw new FileNotFoundException();
-        }
 
+        /// <summary>
+        /// Loads a file and then pipes the stream into an <see cref="SixLabors.ImageSharp.Image"/>
+        /// </summary>
+        /// <param name="path"> </param>
+        /// <exception cref="FileNotFoundException"></exception>
         public static Image<Rgba32> FileToImage(Path path)
         {
             if (FileSystem.FileExists(path))
@@ -103,125 +102,41 @@ namespace losertron4000
             img.Save(stream, new PngEncoder());
             stream.Position = 0;
             return new(stream);
-            //return SixLabors.ImageSharp.Image.Load<Rgba32>(bmp.stream);
-            //return ImageSource.FromStream(() => bmp.stream);
         }
 
-        public static void PreviewSize(Image<Rgba32> img) => img.Mutate(ctx => ctx.Resize(150, 0)); //img.Mutate(ctx => ctx.Resize(0, 494));
+        public static void PreviewSize(Image<Rgba32> img) => img.Mutate(ctx => ctx.Resize(250, 0)); //img.Mutate(ctx => ctx.Resize(0, 494));
         public static void NoTransparency(Image<Rgba32> img) => img.Mutate(ctx => ctx.BackgroundColor(SixLabors.ImageSharp.Color.ParseHex("2c2c2c")));
 
         public static void CropImage(Image<Rgba32> img)
-        {            
-            int minW = int.MaxValue, minH = int.MaxValue;
-            int maxW = int.MinValue, maxH = int.MinValue;
-
-            if (img.DangerousTryGetSinglePixelMemory(out Memory<Rgba32> memory))
-            {
-                Span<Rgba32> span = memory.Span;
-
-                for (int i = 0; i < span.Length; i++)
-                {
-                    int y = i / img.Width;
-                    int x = i % img.Width;
-
-                    Rgba32 pixel = span[i];
-
-                    if (pixel.A != 0)
-                    {
-                        if (minW > x) minW = x;
-                        if (minH > y) minH = y;
-                        if (maxW < x) maxW = x;
-                        if (maxH < y) maxH = y;
-                    }
-                }
-            }
-            else
-            {
-                for (int y = 0; y < img.Height; y++)
-                {
-                    for (int x = 0; x < img.Width; x++)
-                    {
-                        //img.span
-                        //int index = y * img.Width + x;
-
-                        Rgba32 pixel = img[x, y];
-
-                        if (pixel.A != 0)
-                        {
-                            if (minW > x) minW = x;
-                            if (minH > y) minH = y;
-                            if (maxW < x) maxW = x;
-                            if (maxH < y) maxH = y;
-                        }
-
-                    }
-                }
-            }
-
-            Rectangle sourceRect = new Rectangle(minW, minH, maxW - minW, maxH - minH);
-
-            img.Mutate(ctx => ctx.Crop(sourceRect));         
-        }
-
-
-        public Bitmap CropImage(bool shrink = true)
         {
-            using Image<Rgba32> img = this;
+            int minX = img.Width;
+            int minY = img.Height;
+            int maxX = 0;
+            int maxY = 0;
 
-
-            int minW = int.MaxValue, minH = int.MaxValue;
-            int maxW = int.MinValue, maxH = int.MinValue;
-
-            if (img.DangerousTryGetSinglePixelMemory(out Memory<Rgba32> memory))
+            img.ProcessPixelRows(accessor =>
             {
-                Span<Rgba32> span = memory.Span;
-
-                for (int i = 0; i < span.Length; i++)
-                {
-                    int y = i / img.Width;
-                    int x = i % img.Width;
-
-                    Rgba32 pixel = span[i];
-
-                    if (pixel.A != 0)
+                for (int y = 0; y < accessor.Height; y++)
+                {                    
+                    Span<Rgba32> row = accessor.GetRowSpan(y);
+                    for (int x = 0; x < row.Length; x++)
                     {
-                        if (minW > x) minW = x;
-                        if (minH > y) minH = y;
-                        if (maxW < x) maxW = x;
-                        if (maxH < y) maxH = y;
-                    }
-                }
-            }
-            else
-            {
-                for (int y = 0; y < img.Height; y++)
-                {
-                    for (int x = 0; x < img.Width; x++)
-                    {
-                        //img.span
-                        //int index = y * img.Width + x;
-
-                        Rgba32 pixel = img[x, y];
-
-                        if (pixel.A != 0)
+                        if (row[x].A != 0)
                         {
-                            if (minW > x) minW = x;
-                            if (minH > y) minH = y;
-                            if (maxW < x) maxW = x;
-                            if (maxH < y) maxH = y;
+                            if (x < minX) minX = x;
+                            if (y < minY) minY = y;
+                            if (x > maxX) maxX = x;
+                            if (y > maxY) maxY = y;
                         }
-
                     }
                 }
-            }
+            });
 
-            Rectangle sourceRect = new Rectangle(minW, minH, maxW - minW, maxH - minH);
-
+            if (minX > maxX || minY > maxY)           
+                return;
+            
+            Rectangle sourceRect = new Rectangle(minX, minY, (maxX - minX) + 1, (maxY - minY) + 1);
             img.Mutate(ctx => ctx.Crop(sourceRect));
-            if(shrink)
-                img.Mutate(ctx => ctx.Resize(150,0));
-
-            return img;
         }
 
         ~Bitmap()

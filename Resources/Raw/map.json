@@ -54,9 +54,9 @@
                     "fullPath": "\\monika\\extra",
                     "dirs": [],
                     "files": [
+                        "monika_forward_funeral_bow.png",
                         "monika_forward_special_scream.png",
-                        "monika_funeral_bow.png",
-                        "monika_stress.png"
+                        "monika_forward_stress.png"
                     ]
                 },
                 {
@@ -232,31 +232,31 @@
                     "fullPath": "\\natsuki\\extra",
                     "dirs": [],
                     "files": [
-                        "bruise_sat_happclosed.png",
-                        "bruise_sat_neutclosed.png",
-                        "bruise_sat_open.png",
-                        "bruise_sun_happclosed.png",
-                        "bruise_sun_neutclosed.png",
-                        "bruise_sun_open.png",
-                        "natsuki_apron.png",
-                        "natsuki_cross_scarf.png",
-                        "natsuki_crumbs.png",
-                        "natsuki_dry_tears.png",
-                        "natsuki_face_special_scream.png",
+                        "bruise_ff_sat_happclosed.png",
+                        "bruise_ff_sat_neutclosed.png",
+                        "bruise_ff_sat_open.png",
+                        "bruise_ff_sun_happclosed.png",
+                        "bruise_ff_sun_neutclosed.png",
+                        "bruise_ff_sun_open.png",
+                        "natsuki_ffs_apron.png",
+                        "natsuki_ffs_crossed_scarf.png",
+                        "natsuki_ffs_lg1.png",
+                        "natsuki_ffs_lg2.png",
+                        "natsuki_ffs_rg1.png",
+                        "natsuki_ffs_rg2.png",
+                        "natsuki_ffs_scarf.png",
                         "natsuki_ff_bruise_happclosed.png",
                         "natsuki_ff_bruise_neutclosed.png",
                         "natsuki_ff_bruise_open.png",
+                        "natsuki_ff_crumbs.png",
+                        "natsuki_ff_dry_tears.png",
+                        "natsuki_ff_face_special_scream.png",
                         "natsuki_ff_nosebleed.png",
+                        "natsuki_ff_ptsd.png",
                         "natsuki_ff_terminator_shades.png",
                         "natsuki_fs_bruise_closed.png",
                         "natsuki_fs_bruise_open.png",
-                        "natsuki_fs_nosebleed.png",
-                        "natsuki_lg1.png",
-                        "natsuki_lg2.png",
-                        "natsuki_ptsd.png",
-                        "natsuki_rg1.png",
-                        "natsuki_rg2.png",
-                        "natsuki_scarf.png"
+                        "natsuki_fs_nosebleed.png"
                     ]
                 },
                 {
@@ -413,8 +413,8 @@
                     "fullPath": "\\sayori\\extra",
                     "dirs": [],
                     "files": [
-                        "sayori_hair_epilogue.png",
-                        "sayori_ptsd.png",
+                        "sayori_turned_hair_epilogue.png",
+                        "sayori_turned_ptsd.png",
                         "sayori_turned_special_scream.png"
                     ]
                 },
@@ -670,9 +670,7 @@
         }
     ],
     "files": [
-        "AboutAssets.txt",
         "autosort.py",
-        "map.json",
-        "map.txt"
+        "map.json"
     ]
 }

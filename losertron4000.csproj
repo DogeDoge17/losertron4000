@@ -72,6 +72,9 @@
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-android|AnyCPU'">
 	  <ApplicationId>com.dog3y.losertron4000</ApplicationId>
 	  <Debugger>Xamarin</Debugger>
+    <EnableLLVM>true</EnableLLVM>
+    <RunAOTCompilation>true</RunAOTCompilation>
+    <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
 	  <AndroidKeyStore>False</AndroidKeyStore>
 	  <AndroidPackageFormat>apk</AndroidPackageFormat>
 	  <AndroidSigningStorePass>natsuki</AndroidSigningStorePass>
@@ -128,5 +131,7 @@
 	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
 	  <Exec Command="py automap.py" />
 	</Target>
+
+	<ProjectExtensions><VisualStudio><UserProperties /></VisualStudio></ProjectExtensions>
 
 </Project>

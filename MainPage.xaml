@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             xmlns:local="clr-namespace:losertron4000"
              x:Class="losertron4000.MainPage">
 
     <Grid x:Name="centralGrid" RowSpacing="0" ColumnSpacing="0">
@@ -26,9 +27,10 @@
             HorizontalOptions="FillAndExpand"
             VerticalOptions="FillAndExpand" />
 
-            <Grid ColumnDefinitions="Auto,*,Auto" x:Name="topBar">
+            <Grid ColumnDefinitions="Auto,Auto,*,Auto" x:Name="topBar">
                 <Picker x:Name="girlPicker" Grid.Column="0"/>
-                <Button Clicked="OnSavedClicked" x:Name="saveBtn" Text="SAVE" Grid.Column="2"/>
+                <!--<ImageButton Source="Images/refresh.svg" x:Name="refreshGirl" Grid.Column="1"/>-->
+                <Button Clicked="OnSavedClicked" x:Name="saveBtn" Text="SAVE" Grid.Column="3"/>
             </Grid>
         </Grid>
     
@@ -40,7 +42,231 @@
 
                 </Grid>
             </ScrollView>
-            <ScrollView x:Name="imageScroll" Grid.Column="0"                         
+
+            <!--<CollectionView x:Name="imageCollection" 
+                Grid.Column="0"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand" 
+                
+                >
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" Span="3" />
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                            <local:DokiExpression 
+                                Clicked="OnExpressionClicked" 
+                                Source="{Binding TrueUri}"
+                                Uri="{Binding Uri}" 
+                                BackgroundColor="{Binding BackgroundColor}"
+                                Category="{Binding Category}"  
+                                Aspect="AspectFit"    
+                                SizeChanged="ExpressionSize"/>
+
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>-->
+            
+
+
+            <ListView x:Name="buttonListView" SizeChanged="ExpressionListSize" ItemsSource="{Binding noting}" SeparatorVisibility="None" SelectionMode="None">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid Padding="5" ColumnSpacing="10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <local:ExpressionButton 
+                                    Grid.Column="0"
+                                    Clicked="OnExpressionClicked" 
+                                    Source="{Binding [0].TrueUri}"
+                                    Uri="{Binding [0].Uri}" 
+                                    BackgroundColor="{Binding [0].BackgroundColor}"
+                                    Category="{Binding [0].Category}"  
+                                    Aspect="AspectFit"    
+                                    IsEnabled="{Binding [0].IsEnabled}"
+                                    IsVisible="{Binding [0].IsEnabled}"/>
+                                <local:ExpressionButton 
+                                    Grid.Column="1"
+                                    Clicked="OnExpressionClicked" 
+                                    Source="{Binding [1].TrueUri}"
+                                    Uri="{Binding [1].Uri}" 
+                                    BackgroundColor="{Binding [1].BackgroundColor}"
+                                    Category="{Binding [1].Category}"  
+                                    Aspect="AspectFit"    
+                                    IsEnabled="{Binding [1].IsEnabled}"
+                                    IsVisible="{Binding [1].IsEnabled}"/>
+                                <local:ExpressionButton 
+                                    Grid.Column="2"
+                                    Clicked="OnExpressionClicked" 
+                                    Source="{Binding [2].TrueUri}"
+                                    Uri="{Binding [2].Uri}" 
+                                    BackgroundColor="{Binding [2].BackgroundColor}"
+                                    Category="{Binding [2].Category}"  
+                                    Aspect="AspectFit"    
+                                    IsEnabled="{Binding [2].IsEnabled}"
+                                    IsVisible="{Binding [2].IsEnabled}"/>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.Style>
+                    <Style TargetType="ViewCell">
+                        <Setter Property="VisualStateManager.VisualStateGroups">
+                            <Setter.Value>
+                                <VisualStateGroupList>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualState x:Name="Normal" />
+                                        <VisualState x:Name="Selected" />
+                                        <VisualState x:Name="Pressed" />
+                                    </VisualStateGroup>
+                                </VisualStateGroupList>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListView.Style>
+            </ListView>
+
+
+            <!--<Grid x:Name="listViewGrid" ColumnSpacing="4" VerticalOptions="FillAndExpand">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <ListView x:Name="imageCollection1" 
+    Grid.Column="0"
+    HorizontalOptions="FillAndExpand"
+    VerticalOptions="FillAndExpand" 
+    ItemsSource="{Binding MyItems}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <local:DokiExpression 
+             Clicked="OnExpressionClicked" 
+             Source="{Binding TrueUri}"
+             Uri="{Binding Uri}" 
+             BackgroundColor="{Binding BackgroundColor}"
+             Category="{Binding Category}"  
+             Aspect="AspectFit"    
+             SizeChanged="ExpressionSize"/>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>-->
+
+
+
+            <!--<Grid x:Name="listViewGrid" ColumnSpacing="4" VerticalOptions="FillAndExpand">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <ListView x:Name="imageCollection1" 
+                Grid.Column="0"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand" 
+                ItemsSource="{Binding MyItems}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <local:DokiExpression 
+                         Clicked="OnExpressionClicked" 
+                         Source="{Binding TrueUri}"
+                         Uri="{Binding Uri}" 
+                         BackgroundColor="{Binding BackgroundColor}"
+                         Category="{Binding Category}"  
+                         Aspect="AspectFit"    
+                         SizeChanged="ExpressionSize"/>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <ListView x:Name="imageCollection2" 
+                        Grid.Column="1"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="FillAndExpand" 
+                        ItemsSource="{Binding MyItems}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <local:DokiExpression 
+                                        Clicked="OnExpressionClicked" 
+                                        Source="{Binding TrueUri}"
+                                        Uri="{Binding Uri}" 
+                                        BackgroundColor="{Binding BackgroundColor}"
+                                        Category="{Binding Category}"  
+                                        Aspect="AspectFit"    
+                                        SizeChanged="ExpressionSize"/>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <ListView x:Name="imageCollection3" 
+                    Grid.Column="2"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="FillAndExpand" 
+                    ItemsSource="{Binding MyItems}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                    <local:DokiExpression 
+                                        Clicked="OnExpressionClicked" 
+                                        Source="{Binding TrueUri}"
+                                        Uri="{Binding Uri}" 
+                                        BackgroundColor="{Binding BackgroundColor}"
+                                        Category="{Binding Category}"  
+                                        Aspect="AspectFit"    
+                                        SizeChanged="ExpressionSize"/>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>-->
+            
+            
+            
+            <!--<CollectionView x:Name="imageCollection" 
+                Grid.Column="0"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand" 
+                ItemSizingStrategy="MeasureFirstItem"
+                >
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" Span="3" />
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Padding="10">
+                            <local:DokiExpression 
+                                Clicked="OnExpressionClicked" 
+                                Source="{Binding TrueUri}"
+                                Uri="{Binding Uri}" 
+                                BackgroundColor="{Binding BackgroundColor}"
+                                Category="{Binding Category}"  
+                                Aspect="AspectFit"    
+                                SizeChanged="ExpressionSize"/>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>-->
+
+            <!--<ScrollView x:Name="imageScroll" Grid.Column="0"                         
             HorizontalOptions="FillAndExpand"
             VerticalOptions="FillAndExpand">
                 <Grid x:Name="itemGrid"  RowSpacing="10" ColumnSpacing="10">
@@ -54,7 +280,7 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                 </Grid>
-            </ScrollView>
+            </ScrollView>-->
         </StackLayout>
         
     </Grid>
