@@ -5,6 +5,8 @@
  
  stole all images from [exit music redux](https://dokimods.me/mods/exit-music-redux/) and [MPT](https://github.com/chronoshag/DDLCMPT) 
 
+runs like absolute dog on android but I'm working on that
+
  Works as a desktop app and a mobile app (layout changes with aspect ratio)\
  ![Photo of Natsuki on the mobile app](https://i.imgur.com/RL5UsOx.png)
  ![Photo of Natsuki on the desktop app](https://i.imgur.com/8GtAHUs.png)
