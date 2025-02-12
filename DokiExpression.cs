@@ -7,20 +7,20 @@ using System.Threading.Tasks;
 
 namespace losertron4000
 {
-    public class DokiExpression : ImageButton
+    public class ExpressionButton : ImageButton
     {
         public static readonly BindableProperty UriProperty =
            BindableProperty.Create(
                nameof(Uri),                // Property name
                typeof(string),                    // Property type
-               typeof(ImageItem),           // Declaring type
+               typeof(DokiExpression),           // Declaring type
                string.Empty);
 
         public static readonly BindableProperty CategoryProperty =
            BindableProperty.Create(
                nameof(Category),                // Property name
                typeof(string),                    // Property type
-               typeof(ImageItem),           // Declaring type
+               typeof(DokiExpression),           // Declaring type
                string.Empty);
 
 
@@ -39,7 +39,7 @@ namespace losertron4000
 
 
 
-    public class ImageItem : INotifyPropertyChanged
+    public class DokiExpression : INotifyPropertyChanged
     {
         private string trueUri;
         public string TrueUri
@@ -118,17 +118,17 @@ namespace losertron4000
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public bool Equals(ImageItem other)
+        public bool Equals(DokiExpression other)
         {
             return TrueUri.Equals(other.TrueUri) && Uri.ToString().Equals(other.Uri.ToString()) && Category.Equals(other.Category) && BackgroundColor.Equals(other.BackgroundColor);
         }
 
-        public bool Equals(DokiExpression other)
+        public bool Equals(ExpressionButton other)
         {
             return Uri.ToString().Equals(other.Uri.ToString()) && Category.Equals(other.Category) && BackgroundColor.Equals(other.BackgroundColor);
         }
 
-        public ImageItem(Path imageUri)
+        public DokiExpression(Path imageUri)
         {
             Uri = imageUri;
             TrueUri = imageUri.ToString();
@@ -136,7 +136,7 @@ namespace losertron4000
             BackgroundColor = Colors.Transparent;
         }
 
-        public ImageItem()
+        public DokiExpression()
         {
             Uri = new Path("");
             TrueUri = Uri;
@@ -145,7 +145,7 @@ namespace losertron4000
             IsEnabled = false;
         }
 
-        public ImageItem(DokiExpression ex)
+        public DokiExpression(ExpressionButton ex)
         {
             Uri = new Path(ex.Uri);
             TrueUri = ex.Uri;

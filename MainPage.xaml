@@ -80,7 +80,7 @@
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <local:DokiExpression 
+                                <local:ExpressionButton 
                                     Grid.Column="0"
                                     Clicked="OnExpressionClicked" 
                                     Source="{Binding [0].TrueUri}"
@@ -88,10 +88,9 @@
                                     BackgroundColor="{Binding [0].BackgroundColor}"
                                     Category="{Binding [0].Category}"  
                                     Aspect="AspectFit"    
-                                    SizeChanged="ExpressionSize"
                                     IsEnabled="{Binding [0].IsEnabled}"
                                     IsVisible="{Binding [0].IsEnabled}"/>
-                                <local:DokiExpression 
+                                <local:ExpressionButton 
                                     Grid.Column="1"
                                     Clicked="OnExpressionClicked" 
                                     Source="{Binding [1].TrueUri}"
@@ -99,10 +98,9 @@
                                     BackgroundColor="{Binding [1].BackgroundColor}"
                                     Category="{Binding [1].Category}"  
                                     Aspect="AspectFit"    
-                                    SizeChanged="ExpressionSize"
                                     IsEnabled="{Binding [1].IsEnabled}"
                                     IsVisible="{Binding [1].IsEnabled}"/>
-                                <local:DokiExpression 
+                                <local:ExpressionButton 
                                     Grid.Column="2"
                                     Clicked="OnExpressionClicked" 
                                     Source="{Binding [2].TrueUri}"
@@ -110,7 +108,6 @@
                                     BackgroundColor="{Binding [2].BackgroundColor}"
                                     Category="{Binding [2].Category}"  
                                     Aspect="AspectFit"    
-                                    SizeChanged="ExpressionSize"
                                     IsEnabled="{Binding [2].IsEnabled}"
                                     IsVisible="{Binding [2].IsEnabled}"/>
                             </Grid>

@@ -5,17 +5,18 @@ using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
 using System.Collections.ObjectModel;
 using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace losertron4000
 {
     public partial class MainPage : ContentPage
     {
-        public static string girl = "natsuki";
+        private string _girl = "natsuki";
 
-        public Dictionary<string, ObservableCollection<ImageItem>> expressions;
+        public Dictionary<string, ObservableCollection<DokiExpression>> expressions;
 
         public GirlsGirling _girlDefaults;
-        private List<ImageItem> _selectedExpressions;
+        private List<DokiExpression> _selectedExpressions;
 
         private int _selectedGroup = 0;
 
@@ -29,71 +30,71 @@ namespace losertron4000
             InitializeComponent();
             OnSizeAllocated(DeviceDisplay.MainDisplayInfo.Width, DeviceDisplay.MainDisplayInfo.Height);
             FileSystem.Init();           
-            LoadGirls();
-
+            InitDokis();
         }
 
-        private void LoadGirls()
+        /// <summary>
+        /// Starts the initialization of all data related to the dokis
+        /// </summary>
+        private void InitDokis()
         {
             Path[] girlies = FileSystem.GetDirectories();
 
             for (int i = 0; i < girlies.Length; i++)
             {
                 string filename = girlies[i].FileName;
-                girlPicker.Items.Add(filename.First().ToString().ToUpper() + filename.Substring(1));
+                girlPicker.Items.Add(filename.First().ToString().ToUpper() + filename.Substring(1)); // makes the name capitalised to be all fancy
             }
-            girlPicker.SelectedIndexChanged += ReinitGirls;
+            girlPicker.SelectedIndexChanged += ReinitDoki;
 
-            girlPicker.SelectedIndex = girlPicker.Items.IndexOf("Natsuki");
+            girlPicker.SelectedIndex = girlPicker.Items.IndexOf(_girl.First().ToString().ToUpper() + _girl.Substring(1)); // indirectly calls ReinitDoki
         }
 
-        private void ReinitGirls(object? sender, EventArgs e)
+        /// <summary>
+        /// Loads and sets up all the information of the new chosen doki
+        /// </summary>
+        private void ReinitDoki(object? sender, EventArgs e)
         {
-            girl = girlPicker.Items[girlPicker.SelectedIndex].ToLower();
+            _girl = girlPicker.Items[girlPicker.SelectedIndex].ToLower();
             LoadImageData();
             ConstructImageButtons();
             ChooseDefaults();
             ConstructDoki(false);
         }
 
+        /// <summary>
+        /// Creates the tabs to switch expression categories and then creates images for the cache if they dont exist.
+        /// Loads the defaults/doki specific info
+        /// </summary>
         private void LoadImageData()
         {
-            var folders = FileSystem.GetDirectories(girl);
+            var folders = FileSystem.GetDirectories(_girl);
             expressions = new(folders.Length);
             tabGrid.Clear();
 
-            _girlDefaults = JsonSerializer.Deserialize<GirlsGirling>(FileSystem.ReadFile(new Path(girl) / "defaults.json"));
+            _girlDefaults = JsonSerializer.Deserialize<GirlsGirling>(FileSystem.ReadFile(new Path(_girl) / "defaults.json"));
+
+            List<Task> previewGenTasks = new List<Task>();
 
             for (int i = 0; i < folders.Length; i++)
             {
                 var imgPaths = FileSystem.GetFiles(folders[i]);
-                ObservableCollection<ImageItem> list = new();
+                ObservableCollection<DokiExpression> list = new();
                 for (int j = 0; j < imgPaths.Length; j++)
                 {
                     list.Add(new(imgPaths[j]));
 
                     if (!Cache.TryLoadSource(list[j].Uri, out var img))
                     {
-                        Image<Rgba32> bitmap = Bitmap.FullProcessImage(list[j].Uri, Bitmap.CropImage, Bitmap.PreviewSize);
-                        Cache.Save(bitmap, list[j].Uri);
+                        Path path = list[j].Uri;
+                        previewGenTasks.Add(Task.Run(() => {
+                            Image<Rgba32> bitmap = Bitmap.FullProcessImage(path, Bitmap.CropImage, Bitmap.PreviewSize);
+                            Cache.Save(bitmap, path);
+                        }));                        
                     }
 
                     list[j].Category = imgPaths[j].DirectoryPath.FileName;
-                    //list[j].Aspect = Aspect.AspectFit;
-
-
-                    //list[j].Clicked += OnExpressionClicked;
-                    //list[j].SizeChanged += (s, e) =>
-                    //{
-                    //    DokiExpression img = (DokiExpression)s;
-                    //    if (img.Width > 0)
-                    //    {
-                    //        img.HeightRequest = img.Width;  // Ensure the image stays square
-                    //    }
-                    //};
                 }
-
-                Border border = new();
 
                 Label tab = new Label();
                 tab.Text = folders[i].FileName;
@@ -107,27 +108,18 @@ namespace losertron4000
                 tabGrid.Add(tab, i, 0);
                 expressions.Add(folders[i].FileName, list);
             }
+
+            Task.WhenAll(previewGenTasks).Wait();
         }
 
-        private void ExpressionListSize(object? sender, EventArgs e)
-        {
-            buttonListView.RowHeight = (int)(buttonListView.Width / 3);
-        }
-
-        private void ExpressionSize(object? sender, EventArgs e)
-        {
-            //DokiExpression img = (DokiExpression)sender;
-            //if (img.Width > 0 && img.HeightRequest != img.Width)
-            //{
-            //    img.HeightRequest = img.Width;
-            //}
-        }
-
+        /// <summary>
+        /// Adds the default expressions of the doki into the _selectedExpressions for them to be displayed (supplied by defaults.json)
+        /// </summary>
         private void ChooseDefaults()
         {
             _selectedExpressions = new();
 
-            List<ImageItem> megaList = new List<ImageItem>();
+            List<DokiExpression> megaList = new List<DokiExpression>();
             for (int i = 0; i < expressions.Count; i++)
                 megaList.AddRange(expressions.Values.ToList()[i]);
 
@@ -142,25 +134,24 @@ namespace losertron4000
             UpdateWarnings(null);
         }
 
-
-
+        /// <summary>
+        /// Makes a bitmap and then draws all selected features of the doki onto it.
+        /// </summary>
+        /// <param name="export">Decides if it should use the bitmap in the preview image or to save it to the disk.</param>
         private async void ConstructDoki(bool export = false)
         {
             using Image<Rgba32> img = new Image<Rgba32>(960, 960);
 
             bool natsdown = false;
-            if (girl == "natsuki")
+            if (_girl == "natsuki")
                 natsdown = _selectedExpressions.FirstOrDefault(image => image.Uri.ToString().Contains("crossed"), null) != null;
 
             for (int i = 0; i < _selectedExpressions.Count; i++)
             {
                 //ik ik ik its hardcoded but igdaf atp
                 SixLabors.ImageSharp.Point drawOffset = natsdown && !_selectedExpressions[i].Uri.ToString().Contains("crossed") ? new SixLabors.ImageSharp.Point(18, 22) : new SixLabors.ImageSharp.Point(0, 0);
-
-
                 img.Mutate(ctx => ctx.DrawImage(Bitmap.FileToImage(_selectedExpressions[i].Uri), drawOffset, 1));
             }
-
 
             if (!export)
             {
@@ -173,95 +164,111 @@ namespace losertron4000
             else
             {
                 int i = 0;
-                for (i = 0; File.Exists(Path.PhotosDirectory / $"{girl}-{i}.png"); i++) ;
+                for (i = 0; File.Exists(Path.PhotosDirectory / $"{_girl}-{i}.png"); i++) ; // generates a file name
 
                 if (!System.IO.Directory.Exists(Path.PhotosDirectory))
                     System.IO.Directory.CreateDirectory(Path.PhotosDirectory);
 
-                img.SaveAsPng(Path.PhotosDirectory / $"{girl}-{i}.png");
-
+                img.SaveAsPng(Path.PhotosDirectory / $"{_girl}-{i}.png");
 #if ANDROID
-        // Update the gallery
-        Android.Media.MediaScannerConnection.ScanFile(Android.App.Application.Context, new string[] { Path.PhotosDirectory / $"{girl}-{i}.png" }, null, null);
+        Android.Media.MediaScannerConnection.ScanFile(Android.App.Application.Context, new string[] { Path.PhotosDirectory / $"{_girl}-{i}.png" }, null, null);
 #endif
-                await Toast.Make($"{girl} saved to {Path.PhotosDirectory / $"{girl}-{i}.png"}", ToastDuration.Short, 14).Show();                         
+                await Toast.Make($"{_girl} saved to {Path.PhotosDirectory / $"{_girl}-{i}.png"}", ToastDuration.Short, 14).Show();                         
             }
 
         }
 
-
+        /// <summary>
+        /// Loads the correct list of ImageButtons the selected tab and then sets up the list view to display them 
+        /// </summary>
         private void ConstructImageButtons()
-        {
-            //var folders = FileSystem.GetDirectories(girl);
-            //expressions = new(folders.Length);
-
-            //itemGrid = new Grid
-            //{
-            //    ColumnDefinitions =
-            //    {
-            //        new ColumnDefinition { Width = GridLength.Star },
-            //        new ColumnDefinition { Width = GridLength.Star },
-            //        new ColumnDefinition { Width = GridLength.Star }
-            //    }
-            //};
+        {            
             if (_loadingImages)
                 return;
 
             _loadingImages = true;
+            
+            ObservableCollection<DokiExpression> theWitch = expressions.Values.ToList()[_selectedGroup];
 
-            var ofwg = expressions.Values.ToList();
-
-            //for (int i = 0; i < ofwg.Count; i++)
-            //{
-            //    foreach (var btn in ofwg[i])
-            //    {
-            //        if (btn.Source is IDisposable disposable)
-            //        {
-            //            disposable.Dispose();
-            //        }
-            //        else
-            //        {
-            //            btn.Source = _sample;
-            //        }
-            //    }
-            //}
-
-
-            //itemGrid.Clear();
-
-            var theWitch = ofwg[_selectedGroup];
-
-            for (int i = 0; i < theWitch.Count; i++)
-            {
-                //int y = i / 3;
-                //int x = i % 3;
-
+            for (int i = 0; i < theWitch.Count; i++)                          
                 theWitch[i].TrueUri = Path.Cache / theWitch[i].Uri;
-                //theWitch[i].ImageSource = new UriImageSource() { Uri = new(Path.Cache / theWitch[i].Uri), CachingEnabled = true, CacheValidity = TimeSpan.FromDays(1)};
-                //itemGrid.Add(theWitch[i], x, y);
-            }
-            //imageCollection.ItemsSource = theWitch;
-
-            //expressView = new(theWitch, imageCollection1, imageCollection2, imageCollection3);
-            new ColListView<ImageItem>(theWitch, buttonListView, 3);
-            //buttonListView.RowHeight = (int)(buttonListView.Width / 3);
-
-            //List<ImageItem> pmo = new List<ImageItem> { theWitch[0] };
-
-            //buttonListView.ItemsSource = pmo;
-
-
+          
+            new ColListView<DokiExpression>(theWitch, buttonListView, 3);
 
             _loadingImages = false;
-        }
+        }        
 
+        /// <summary>
+        /// Ensures all features of the doki are layered correctly (sorts z-layer)
+        /// </summary>
         private void SortExpressions()
         {
             var folderIndexMap = _girlDefaults.Folders.ToDictionary(folder => folder.Name, folder => folder.ZIndex);
 
             _selectedExpressions = _selectedExpressions.OrderBy(item => folderIndexMap.TryGetValue(item.Category, out int zIndex) ? zIndex : int.MaxValue).ToList();
+        }       
+
+        /// <summary>
+        /// Finds any incompatible expresses with the last selected one and highlights them yellow.
+        /// </summary>
+        /// <param name="item">The category to base the conflicts off of</param>
+        private void UpdateWarnings(DokiExpression? item)
+        {
+            string[] groupIds;
+
+            if (item == null)
+            {
+                Dictionary<string[], int> occurences = new();
+                for (int i = 0; i < _selectedExpressions.Count; i++)
+                {
+                    string[] group = _girlDefaults.Groups?.FirstOrDefault(ids => ids.Any(grp => _selectedExpressions[i].Uri.ToString().Contains(grp))) ?? new string[0];
+
+                    if (group == null)
+                        continue;
+
+                    if (occurences.ContainsKey(group))
+                        occurences[group]++;
+                    else
+                        occurences.Add(group, 0);
+                }
+                groupIds = occurences.Aggregate((x, y) => x.Value > y.Value ? x : y).Key;
+            }
+            else
+                groupIds = _girlDefaults.Groups?.FirstOrDefault(ids => ids.Any(grp => item.Uri.ToString().Contains(grp))) ?? new string[0];
+
+            for (int i = 0; i < expressions.Count; i++)
+            {
+                var expGroup = expressions.Values.ToArray()[i];
+                foreach (var image in expGroup)
+                {                    
+                    if (groupIds == null && (image.BackgroundColor != Colors.Green && image.BackgroundColor != Colors.YellowGreen))
+                    {
+                        image.BackgroundColor = Colors.Transparent;
+                        continue;
+                    }
+
+                    if (!groupIds.Any(group => image.Uri.ToString().Contains(group)))
+                    {
+                        image.BackgroundColor = image.BackgroundColor == Colors.Green || image.BackgroundColor == Colors.YellowGreen ? Colors.YellowGreen : Colors.Yellow;
+                    }
+                    else if (image.BackgroundColor != Colors.Green && image.BackgroundColor != Colors.YellowGreen)
+                        image.BackgroundColor = Colors.Transparent;
+                }
+            }
+
+            for(int i = 0; i < _selectedExpressions.Count; i++)
+            {
+                if (_selectedExpressions[i].BackgroundColor == Colors.YellowGreen && groupIds.Any(group => _selectedExpressions[i].Uri.ToString().Contains(group)))
+                    _selectedExpressions[i].BackgroundColor = Colors.Green;
+            }
         }
 
+        /// <summary>
+        /// Counts how many elements matches the expression
+        /// </summary>        
+        /// <param name="source">The array to iterate through</param>
+        /// <param name="predicate">The function that does the checking</param>
+        /// <returns>The number of matchs</returns>
         private static int CountCon<TSource>(IEnumerable<TSource> source, Func<TSource, bool> predicate)
         {
             int found = 0;
@@ -276,67 +283,18 @@ namespace losertron4000
             return found;
         }
 
-        private void UpdateWarnings(ImageItem? item)
+        /// <summary>
+        /// Ensures that the correct number of expressions are selected by category
+        /// </summary>
+        /// <param name="item">The Expression that contains the category to be toggled</param>
+        private void ToggleOfType(DokiExpression item)
         {
-            string[] groupIds;
+            var folder = _girlDefaults.Folders.FirstOrDefault(folder => folder.Name == item.Category) ;
 
-            if (item == null)
-            {
-                Dictionary<string[], int> occurences = new();
-                for (int i = 0; i < _selectedExpressions.Count; i++)
-                {
-                    string[] group = _girlDefaults.Groups?.FirstOrDefault(ids => ids.Any(grp => _selectedExpressions[i].Uri.ToString().Contains(grp)));
-
-                    if (group == null)
-                        continue;
-
-                    if (occurences.ContainsKey(group))
-                        occurences[group]++;
-                    else
-                        occurences.Add(group, 0);
-                }
-                groupIds = occurences.Aggregate((x, y) => x.Value > y.Value ? x : y).Key;
-            }
-            else
-                groupIds = _girlDefaults.Groups?.FirstOrDefault(ids => ids.Any(grp => item.Uri.ToString().Contains(grp)));
-
-
-            for (int i = 0; i < expressions.Count; i++)
-            {
-                var expGroup = expressions.Values.ToArray()[i];
-                foreach (var image in expGroup)
-                {
-                    if (image.BackgroundColor == Colors.Green)
-                        continue;
-
-                    if (groupIds == null)
-                    {
-                        image.BackgroundColor = Colors.Transparent;
-                        continue;
-                    }
-
-
-                    if (!groupIds.Any(group => image.Uri.ToString().Contains(group)))
-                    {
-                        image.BackgroundColor = Colors.Yellow;
-                    }
-                    else if (image.BackgroundColor != Colors.Green)
-                        image.BackgroundColor = Colors.Transparent;
-                }
-            }
-
-        }
-
-        private void ToggleOfType(ImageItem item)
-        {
-
-            var folder = _girlDefaults.Folders.FirstOrDefault(folder => folder.Name == item.Category);
-
-            if (folder.Max == -1) return;
-
+            if (folder.Max == -1) 
+                return;
 
             int max = !folder.Bypass.Any(bypass => item.Uri.ToString().Contains(bypass)) ? folder.Max : 1;
-
 
             while (CountCon(_selectedExpressions, image => image.Category == item.Category) >= max)
             {
@@ -346,18 +304,16 @@ namespace losertron4000
             }
         }
 
+        /// <summary>
+        /// Toggles the pressed expression between selected and not selected
+        /// </summary>        
         private async void OnExpressionClicked(object sender, EventArgs e)
         {
-            ImageItem item;
-            if (sender.GetType() == typeof(DokiExpression))
-            {
-                var fakeItem = (DokiExpression)sender;
-
-                item = expressions.SelectMany(kv => kv.Value).FirstOrDefault(imageItem => imageItem.Equals(fakeItem));
-
-            }
+            DokiExpression item;
+            if (sender is ExpressionButton fakeItem)            
+                item = expressions.SelectMany(keyVal => keyVal.Value).FirstOrDefault(imageItem => imageItem.Equals(fakeItem));            
             else
-                item = (ImageItem)sender;
+                item = (DokiExpression)sender;
 
             if (_selectedExpressions.IndexOf(item) == -1)
             {
@@ -371,19 +327,26 @@ namespace losertron4000
                 item.BackgroundColor = Colors.Transparent;
                 _selectedExpressions.Remove(item);
             }
-            //imageCollection.ItemsSource = expressions.Values.ToList()[_selectedGroup];
+
             SortExpressions();
             await Task.Run(() => ConstructDoki(false));
         }
 
+        /// <summary>
+        /// Instructs ConstructDoki to save the doki to the disk
+        /// </summary>
         private async void OnSavedClicked(object sender, EventArgs e)
         {
             await Task.Run(() => ConstructDoki(true));
         }
 
+        /// <summary>
+        /// changes the selected expression group depending on the tab clicked
+        /// </summary>        
         private void OnTabClicked(object? sender, TappedEventArgs e)
         {
-            Label tabLbl = (Label)sender;
+            if (!(sender is Label tabLbl))
+                return;
 
             foreach (Label tab in tabGrid.Children)
             {
@@ -395,11 +358,27 @@ namespace losertron4000
             ConstructImageButtons();
         }
 
+        /// <summary>
+        /// Ensures the ExpressionButtons are all 1:1 by setting the row height of the listview
+        /// </summary>        
+        private void ExpressionListSize(object? sender, EventArgs e)
+        {
+            buttonListView.RowHeight = (int)(buttonListView.Width / 3);
+        }
+        
+        /// <summary>
+        /// stops unnecessary layout shifts
+        /// </summary>
         private byte _lastAspect = 3;
+
+        /// <summary>
+        /// Handles the layout changes when the orientation is modified
+        /// </summary>
+        /// <param name="width">The new width of the window</param>
+        /// <param name="height">The new height of the window</param>
         protected override void OnSizeAllocated(double width, double height)
         {
             base.OnSizeAllocated(width, height);
-
 
             double aspectRatio = width / height;
             byte asp = (byte)(aspectRatio > 1 ? 1 : 0);
@@ -409,7 +388,7 @@ namespace losertron4000
 
             _lastAspect = asp;
 
-            if (asp == 1) //horizontal
+            if (asp == 1) // horizontal
             {
                 centralGrid.ColumnDefinitions = new()
                 {
@@ -434,7 +413,7 @@ namespace losertron4000
                 imageGrid.SetRow(dokiPreview, 0);
                 imageGrid.SetRow(topBar, 1);
             }
-            else //vertical
+            else // vertical
             {
                 centralGrid.RowDefinitions = new()
                 {

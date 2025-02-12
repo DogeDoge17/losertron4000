@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace losertron4000
 {
-    public class ColListView<T> where T : ImageItem, new()
+    public class ColListView<T> where T : DokiExpression, new()
     {
         private ListView _view;
 
