@@ -173,7 +173,11 @@ namespace losertron4000
 #if ANDROID
         Android.Media.MediaScannerConnection.ScanFile(Android.App.Application.Context, new string[] { Path.PhotosDirectory / $"{_girl}-{i}.png" }, null, null);
 #endif
-                await Toast.Make($"{_girl} saved to {Path.PhotosDirectory / $"{_girl}-{i}.png"}", ToastDuration.Short, 14).Show();                         
+
+                await MainThread.InvokeOnMainThreadAsync(() =>
+                {
+                    Toast.Make($"{_girl} saved to {Path.PhotosDirectory / $"{_girl}-{i}.png"}", ToastDuration.Short, 14).Show().Wait();                                         
+                });
             }
 
         }
