@@ -1,4 +1,4 @@
-# ddlc-gachalife
+# LOSERTRON4000 
  make the ddlc guy and they faces like the gacha life
 
  i think this breaks the ddlc tos but thats ok i think
