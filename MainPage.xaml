@@ -38,8 +38,33 @@
             <ScrollView x:Name="tabScroll" Orientation="Horizontal">
                 <Grid x:Name="tabGrid" ColumnSpacing="4"/>
             </ScrollView>
-
-            <ListView x:Name="buttonListView" SizeChanged="ExpressionListSize" ItemsSource="{Binding noting}" SeparatorVisibility="None" SelectionMode="None">
+            <CollectionView x:Name="expressionCollection"
+                HorizontalOptions="FillAndExpand" 
+                VerticalOptions="FillAndExpand"
+                Grid.Row="2"
+                x:DataType="local:DokiExpression">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" Span="3" HorizontalItemSpacing="10" VerticalItemSpacing="10"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <local:Square Clamp="Width">
+                            <local:ExpressionButton                                
+                                Clicked="OnExpressionClicked" 
+                                Source="{Binding TrueUri}"
+                                Uri="{Binding Uri}" 
+                                BackgroundColor="{Binding BackgroundColor}"
+                                Category="{Binding Category}"  
+                                Aspect="AspectFit"    
+                                SizeChanged="ExpressionSize"
+                                HorizontalOptions="FillAndExpand" 
+                                IsEnabled="{Binding IsEnabled}"
+                                IsVisible="{Binding IsEnabled}"/>
+                        </local:Square>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <!--<ListView x:Name="buttonListView" SizeChanged="ExpressionListSize" ItemsSource="{Binding noting}" SeparatorVisibility="None" SelectionMode="None">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -83,7 +108,7 @@
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
-            </ListView>
+            </ListView>-->
         </StackLayout>
     </Grid>
 </ContentPage>

@@ -196,9 +196,9 @@ namespace losertron4000
 
             for (int i = 0; i < theWitch.Count; i++)                          
                 theWitch[i].TrueUri = Path.Cache / theWitch[i].Uri;
-          
-            new ColListView<DokiExpression>(theWitch, buttonListView, 3);
 
+            //new ColListView<DokiExpression>(theWitch, buttonListView, 3);
+            expressionCollection.ItemsSource = theWitch;
             _loadingImages = false;
         }        
 
@@ -362,14 +362,28 @@ namespace losertron4000
             ConstructImageButtons();
         }
 
+        private void ExpressionSize(object? sender, EventArgs e)
+        {
+#if WINDOWS
+
+            if (!(sender is ExpressionButton img))
+                return;
+
+            if (img.Width > 0 && img.HeightRequest != img.Width)
+            {
+                img.HeightRequest = img.Width;
+            }
+#endif
+        }
+
         /// <summary>
         /// Ensures the ExpressionButtons are all 1:1 by setting the row height of the listview
         /// </summary>        
-        private void ExpressionListSize(object? sender, EventArgs e)
-        {
-            buttonListView.RowHeight = (int)(buttonListView.Width / 3);
-        }
-        
+        //private void ExpressionListSize(object? sender, EventArgs e)
+        //{
+        //    buttonListView.RowHeight = (int)(buttonListView.Width / 3);
+        //}
+
         /// <summary>
         /// stops unnecessary layout shifts
         /// </summary>
